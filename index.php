@@ -23,7 +23,7 @@ function displayElement($element,$x) {
     </head>
     <body class="bg-secondary">
         
-        <header class="p-3 mb-3 border-bottom bg-dark text-white">
+        <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
             <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
@@ -78,7 +78,7 @@ function displayElement($element,$x) {
         </header>
 
     
-        <div class="border bg-dark mx-5 jumbotron text-center">
+        <div class="border rounded bg-dark mx-5 jumbotron text-center">
             <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
         </div>
     </body>
