@@ -3,8 +3,8 @@ require_once('../auth.php');
 
 
 //opening json to print page
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
+$contents=file_get_contents("posts.json.php");
+$blogdata=json_decode(substr($contents, 16),true);
 
 $post_id=$_GET['x'];
 
@@ -95,7 +95,7 @@ function displayElement($element,$x) { ?>
                     }
                     fclose($fp);
                 ?>
-                <?php echo '<h6 class="fw-light">'.$blogdata[0]['author'].' - '.$blogdata[0]['date'].'</h6>' ?>
+                <?php echo '<h6 class="fw-light">'.$blogdata[0]['author'].' | '.$blogdata[0]['time'][0]['date'].'</h6>' ?>
             </h5>
         </div>
 
