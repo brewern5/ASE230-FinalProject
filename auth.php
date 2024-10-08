@@ -44,10 +44,10 @@ function checkIfInDB($fileName, $email, $password=null) {
         $line=fgets($fp);
         $line=explode(';',$line);
             //must trim the end because there is a newline character
-        if(count($line)==2 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
+        if(count($line)==3 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
             fclose($fp);
             if(!isset($password)) { return true; }
-            return password_verify($password,trim($ine[1]));
+            return password_verify($password,trim($line[1]));
         }
     }
     fclose($fp);

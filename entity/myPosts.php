@@ -2,16 +2,16 @@
 
 //this page will post the top "review" for each genre that anyone can view
 
-require_once('auth.php');
+require_once('../auth.php');
 
 //opens json to print post info
-$contents=file_get_contents("entity/posts.json");
-$blogdata=json_decode($contents ,true);
+$contents=file_get_contents("posts.json");
+$blogdata=json_decode($contents,true);
 
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="entity/detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
 
 }
 ?>
@@ -41,11 +41,10 @@ function displayElement($element,$x) {
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="index.php" class="nav-link px-2">Home</a></li>
-                        <li><a href="entity/index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) echo '
-                        <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
-                        <li><a href="entity/create.php" class="nav-link px-2">Create New Post</a></li>' ?>
+                        <li><a href="../index.php" class="nav-link px-2">Home</a></li>
+                        <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
+                        <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -82,10 +81,15 @@ function displayElement($element,$x) {
             </div>
         </header>
 
-    
+
         <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
+            <a class="btn btn-info col-2 my-2" href="create.php" role="button">create new post</a>
+
+            <!--prints most recent-->
+            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
         </div>
+
+
     </body>
 
     <div class="container bg-secondary">

@@ -10,8 +10,9 @@ if(islogged()){
 $error='';
 if(count($_POST)>0){
 
-    $error = checkFields();
-    //completnes
+    //$error = checkFields();
+    //completness
+    $error='';
 
     if(strlen($error)==0){
         $fp=fopen('users.csv.php', 'r');
@@ -28,7 +29,7 @@ if(count($_POST)>0){
         if(strlen($error)==0){
             //open csv file in append mode
             $fp=fopen('users.csv.php', 'a+');
-            fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
+            fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).';'.$_POST['name'].PHP_EOL);
             fclose($fp);
             header('location: sign-in.php');
             die();
