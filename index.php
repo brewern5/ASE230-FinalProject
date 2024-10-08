@@ -5,8 +5,8 @@
 require_once('auth.php');
 
 //opens json to print post info
-$contents=file_get_contents("entity/posts.json.php");
-$blogdata=json_decode(substr($contents, 16),true);
+$contents=file_get_contents("entity/posts.json");
+$blogdata=json_decode($contents ,true);
 
 
 function displayElement($element,$x) {
@@ -43,7 +43,9 @@ function displayElement($element,$x) {
                         
                         <li><a href="index.php" class="nav-link px-2">Home</a></li>
                         <li><a href="entity/index.php?x=new" class="nav-link px-2">Posts</a></li>
+                        <?php if(isset($_SESSION['email'])) echo '
                         <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="entity/create.php" class="nav-link px-2">Create New Post</a></li>' ?>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">

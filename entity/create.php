@@ -7,76 +7,54 @@
     //the third field will be an optional single image upload(for now).
 
     //will need to create a new field in posts.json.php with all the include attributes
-    /*
-    "title":"", 
-    "content":"", 
-    "author":"", 
-    "time":[
-        {
-            "date":"",
-            "time":""
-        }
-    ],
-    "tags":[ "", "" ],
-    "likes":int,
-    "comments":[
-        {
-            "user":"",
-            "date":"",
-            "commentContent":"",
-            "likes":
-        }
-    ]     
-    */
+      
+    if(strlen(isLogged())>0){
 
-    //date("Y-m-d")
+        $error = checkPostFields();
 
-    //date("H:i:s")
+        if(count($_POST)>0){
 
-    $error = checkPostFields();
+            $json = file_get_contents('posts.json');
+            $tempArray = json_decode($json, true);
 
-    if(count($_POST)>0){
-
-        $json = file_get_contents('posts.json');
-        $tempArray = json_decode($json, true);
-
-        $jsonArray = 
-        [
-            'title' => '',
-            'content' => '',
-            'author' => '',
-            'time' => [
-                'date' => getDateStamp(),
-                'timeStamp' => getTimeStamp()
-            ],
-            'tags'=> [],
-            'likes' => 0,
-            'comments'=> [
-                'numOfComments' => 0,
-                'comment' => [
-                    'user'=> '',
-                    'date' => '',
-                    'commentContent' => '',
-                    'likes' => 0
+            $jsonArray = 
+            [
+                'title' => '',
+                'content' => '',
+                'author' => '',
+                'time' => [
+                    'date' => getDateStamp(),
+                    'timeStamp' => getTimeStamp()
+                ],
+                'tags'=> [],
+                'likes' => 0,
+                'comments'=> [
+                    'numOfComments' => 0,
+                    'comment' => [
+                        'user'=> '',
+                        'date' => '',
+                        'commentContent' => '',
+                        'likes' => 0
+                    ]
                 ]
-            ]
-        ];
+            ];
 
-        if(strlen($error) == 0){
-            $jsonArray['title'] = $_POST['title'];
-            $jsonArray['content'] = $_POST['content'];
-            $jsonArray['tags'] = $_POST['tags'];
+            if(strlen($error) == 0){
+                $jsonArray['title'] = $_POST['title'];
+                $jsonArray['content'] = $_POST['content'];
+                $jsonArray['tags'] = $_POST['tags'];
 
-            $jsonArray['time']['date'] = date("Y:m:d");
-            $jsonArray['time']['timeStamp'] = date("H:i:s");
+                $jsonArray['time']['date'] = date("Y:m:d");
+                $jsonArray['time']['timeStamp'] = date("H:i:s");
 
-            array_push($tempArray, $jsonArray);
+                array_push($tempArray, $jsonArray);
 
-            $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
+                $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
 
-            file_put_contents('posts.json', $jsonData);
+                file_put_contents('posts.json', $jsonData);
+            }
         }
-    }
+
 ?>
 
 <html>
@@ -89,7 +67,7 @@
     <body>
         <h1>Create Post</h1>
         <?php
-        if(strlen($error) > 0) echo $error;
+        if(strlen($error) > 0) {echo $error;}
         ?>
         <form method="POST">
             <label>Title</label><br>
@@ -105,3 +83,9 @@
         </form>
     </body>
 </html>
+<?php 
+    }
+    else{
+        header("location: index.php");
+    }  
+?>
