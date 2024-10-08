@@ -1,18 +1,37 @@
 <?php
 require_once('auth.php');
 
-
 //opening json to print page
 $contents=file_get_contents("posts.json");
 $blogdata=json_decode($contents,true);
 
-function displayElement($element,$x) { ?>
-   
-    <h1><a href="details.php?x=<?php echo $x;?>"><?php echo $element['title']; ?></a></h1>
-    <hr>
+//getting id of page
+$post_id=$_GET['x'];
 
-<?php 
+//------counting views of this page-----//
+//reading elements
+$fp=fopen('visitors.csv','r');
+$i=0;
+$tempR = [];
+while(! feof($fp)) {
+  $temp = fgets($fp);
+  if(explode(';',$temp)[0] == $post_id){
+    $tempR[$i]=$post_id.';'.(explode(';',$temp)[1]+1).PHP_EOL;
+  }
+  else {
+    $tempR[$i]=$temp;
+  }
+  $i++;
 }
+fclose($fp);
+
+//writing elements
+$fp=fopen('visitors.csv','w');
+  for($i=0;$i<count($tempR);$i++) {
+    fputs($fp,$tempR[$i]);
+  }
+fclose($fp);
+
 ?>
 
 <html>
@@ -78,6 +97,28 @@ function displayElement($element,$x) { ?>
                 </div>
             </div>
         </header>
+
+
+        <div class="jumbotron text-center">
+            <h1><?php echo $blogdata[$post_id]['title'] ?></h1>
+            <hr>
+            <h3>
+                <?php echo $blogdata[$post_id]['content'] ?>
+            </h3>
+            <h5>
+                <?php //prints visitor count
+                    $fp=fopen('visitors.csv','r');
+                    while(! feof($fp)) {
+                        $temp = fgets($fp);
+                        if(explode(';',$temp)[0] == $post_id){
+                            echo 'Views: '.(explode(';',$temp)[1]).'<br />';
+                        }
+                    }
+                    fclose($fp);
+                ?>
+                <?php echo $blogdata[0]['author'].' - '.$blogdata[0]['date'] ?>
+            </h5>
+        </div>
 
 
 
