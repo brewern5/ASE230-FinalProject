@@ -25,13 +25,13 @@ function checkFields() {
     if(!isset($_POST['email'][0])) $error=('You must enter your email');
     if(!isset($_POST['password'][0])) $error=('You must enter your password');
     if(!isset($_POST['name'][0])) $error=('You must enter a name!');
+
     //if(!isset($_POST['confirm_password'][0])) $error=('You must confirm your password');
 
     //correctness
     if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) $error='You must enter a valid email';
     if(strlen($_POST['password'])<8 || strlen($_POST['password'])>16) $error='You must enter a password between 8 and 16 characters';
     //if($_POST['password']!=$_POST['confirm_password']) $error='Your passwords do not match';
-
 
     return $error;
 }

@@ -23,9 +23,6 @@ if(count($_POST)>0){
                 $error='The email is already registered';
                 break;
             }
-
-            
-
         }
         fclose($fp);
         if(strlen($error)==0){
