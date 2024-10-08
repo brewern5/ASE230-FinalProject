@@ -1,15 +1,17 @@
 <?php
 require_once('auth.php');
 
-//opens json to print post info
+
+//opening json to print page
 $contents=file_get_contents("posts.json");
 $blogdata=json_decode($contents,true);
 
-
-function displayElement($element,$x) {
+function displayElement($element,$x) { ?>
    
-    echo '<h1><a href="details.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    <h1><a href="details.php?x=<?php echo $x;?>"><?php echo $element['title']; ?></a></h1>
+    <hr>
 
+<?php 
 }
 ?>
 
@@ -20,16 +22,16 @@ function displayElement($element,$x) {
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
+
     </head>
-    <body class="bg-secondary">
-        
-        <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
+    <body>
 
-            <!-- will display user's name if they are logged in -->
+        <header>    <!-- will display user's name if they are logged in -->
             <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
-
+                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; ?>
+        </header>
+        
+        <header class="p-3 mb-3 border-bottom">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
@@ -66,7 +68,7 @@ function displayElement($element,$x) {
                     <?php } else { ?>
                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
+                        <a class="btn btn-outline-dark me-2" href="sign-in.php" role="button">Login</a>
                         <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
                     </div>
                         
@@ -77,19 +79,15 @@ function displayElement($element,$x) {
             </div>
         </header>
 
-    
-        <div class="border rounded bg-dark mx-5 jumbotron text-center">
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-    </body>
 
-    <div class="container bg-secondary">
+
+        <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
                 </a>
-                <span class="mb-3 mb-md-0 text-white">© 2024 Nate Brewer & Danny Poff</span>
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Nate Brewer & Danny Poff</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -99,8 +97,4 @@ function displayElement($element,$x) {
             </ul>
         </footer>
     </div>
-    
 </html>
-
-
-
