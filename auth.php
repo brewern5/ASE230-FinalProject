@@ -24,6 +24,8 @@ function checkFields() {
 
     if(!isset($_POST['email'][0])) $error=('You must enter your email');
     if(!isset($_POST['password'][0])) $error=('You must enter your password');
+    if(!isset($_POST['name'][0])) $error=('You must enter a name!');
+
     //if(!isset($_POST['confirm_password'][0])) $error=('You must confirm your password');
 
     //correctness

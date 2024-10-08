@@ -1,4 +1,7 @@
 <?php
+
+//this page will post the top "review" for each genre that anyone can view
+
 require_once('auth.php');
 
 //opens json to print post info

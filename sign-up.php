@@ -52,6 +52,9 @@ if(count($_POST)>0){
         if(strlen($error)>0) echo $error;
         ?>
         <form method="POST">
+            <label>NAME</label><br>
+            <input class="border border-dark" name='name' type="text" required/>
+            <br><br>
             <label>EMAIL</label><br>
             <input class="border border-dark" name='email' type="email" required/>
             <br><br>
