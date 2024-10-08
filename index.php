@@ -5,13 +5,13 @@
 require_once('auth.php');
 
 //opens json to print post info
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
+$contents=file_get_contents("entity/posts.json.php");
+$blogdata=json_decode(substr($contents, 16),true);
 
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="details.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo '<h1><a href="entity/detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
 
 }
 ?>
@@ -42,7 +42,7 @@ function displayElement($element,$x) {
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
                         <li><a href="index.php" class="nav-link px-2">Home</a></li>
-                        <li><a href="detail.php" class="nav-link px-2">Posts</a></li>
+                        <li><a href="entity/index.php?x=new" class="nav-link px-2">Posts</a></li>
                         <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
                     </ul>
 
@@ -81,7 +81,7 @@ function displayElement($element,$x) {
         </header>
 
     
-        <div class="border rounded bg-dark mx-5 jumbotron text-center">
+        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
             <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
         </div>
     </body>
