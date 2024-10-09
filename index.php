@@ -1,14 +1,17 @@
 <?php
+
+//this page will post the top "review" for each genre that anyone can view
+
 require_once('auth.php');
 
 //opens json to print post info
-$contents=file_get_contents("posts.json");
+$contents=file_get_contents("entity/posts.json");
 $blogdata=json_decode($contents,true);
 
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="details.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo '<h1><a href="entity/detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
 
 }
 ?>
@@ -39,8 +42,8 @@ function displayElement($element,$x) {
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
                         <li><a href="index.php" class="nav-link px-2">Home</a></li>
-                        <li><a href="detail.php" class="nav-link px-2">Posts</a></li>
-                        <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="entity/index.php?x=new" class="nav-link px-2">Posts</a></li>
+                        <li><a href="entity/myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -78,7 +81,7 @@ function displayElement($element,$x) {
         </header>
 
     
-        <div class="border rounded bg-dark mx-5 jumbotron text-center">
+        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
             <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
         </div>
     </body>

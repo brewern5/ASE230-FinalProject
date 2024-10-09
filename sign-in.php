@@ -6,7 +6,7 @@ $error='';
 if(count($_POST)>0){
 
     //completness
-    $error = checkFields();
+    $error = checkFields(0);
     $isEmail = false;
 
     if(strlen($error)==0){
@@ -48,7 +48,7 @@ if(count($_POST)>0){
 
         
     </head>
-    <body class="bg-secondary mt-5 text-white text-center">
+    <body class="bg-secondary mt-5 text-dark text-center">
         <a href="index.php" class="text-decoration-none text-info fs-1">
             <p class="text-start">Home</p>
         </a>
@@ -57,13 +57,14 @@ if(count($_POST)>0){
         <?php
             if(strlen($error)>0) echo '<h4 class="text-warning">'.$error.'</h4>';
         ?>
+        <hr />
         <form method="POST">
             <label>EMAIL</label><br>
-            <input name='email' type="email" required/>
+            <input class="border border-dark" name='email' type="email" required/>
             <br><br>
             <label>PASSWORD</label>
             <br>
-            <input id='password' name='password' type="password" required>
+            <input class="border border-dark" id='password' name='password' type="password" required>
             <br><br>
             <button class="btn btn-info me-2 text-white" type="submit">SIGN IN</button>
         </form>

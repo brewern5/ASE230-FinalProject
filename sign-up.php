@@ -10,7 +10,7 @@ if(islogged()){
 $error='';
 if(count($_POST)>0){
 
-    $error = checkFields();
+    $error = checkFields(1);
     //completnes
 
     if(strlen($error)==0){
@@ -46,12 +46,18 @@ if(count($_POST)>0){
 
     </head>
     <body class="bg-secondary mt-5 text-dark text-center">
+        <a href="index.php" class="text-decoration-none fs-1 text-info">
+            <p class="text-start">Home</p>
+        </a>
         <h1>Sign Up</h1>
         <hr />
         <?php
-        if(strlen($error)>0) echo $error;
+        if(strlen($error)>0) echo '<h4 class="text-warning">'.$error.'</h4>';
         ?>
         <form method="POST">
+        <label>NAME</label><br>
+            <input class="border border-dark" name='name' type="text" required/>
+            <br><br>
             <label>EMAIL</label><br>
             <input class="border border-dark" name='email' type="email" required/>
             <br><br>
@@ -63,7 +69,7 @@ if(count($_POST)>0){
             <br>
             <input class="border border-dark" name='confirmPassword' type="password" required>
             <br><br>
-            <button class="btn btn-warning text-dark" type="submit">SIGN UP</button>
+            <button class="btn btn-info text-dark" type="submit">SIGN UP</button>
         </form>
     </body>
 
