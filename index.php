@@ -44,7 +44,7 @@ function displayElement($element,$x) {
                         <li><a href="index.php" class="nav-link px-2">Home</a></li>
                         <li><a href="entity/index.php?x=new" class="nav-link px-2">Posts</a></li>
                         <?php if(isset($_SESSION['email'])) echo '
-                        <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="entity/myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                         <li><a href="entity/create.php" class="nav-link px-2">Create New Post</a></li>' ?>
                     </ul>
 
