@@ -9,10 +9,11 @@
     //will need to create a new field in posts.json.php with all the include attributes
       
     if(strlen(isLogged())>0){
-
-        $error = checkPostFields();
+        $error='';
 
         if(count($_POST)>0){
+
+            $error = checkPostFields();
 
             $json = file_get_contents('posts.json');
             $tempArray = json_decode($json, true);
@@ -21,6 +22,10 @@
             [
                 'title' => '',
                 'content' => '',
+                "picture" => '',
+                "band" => '',
+                "album" => '',
+                "song" => '',
                 'author' => '',
                 'time' => [
                     'date' => getDateStamp(),
@@ -42,8 +47,12 @@
             if(strlen($error) == 0){
                 $jsonArray['title'] = $_POST['title'];
                 $jsonArray['content'] = $_POST['content'];
-                $jsonArray['tags'] = $_POST['tags'];
+                $jsonArray['picture'] = $_POST['picture'];    
+                $jsonArray['band'] = $_POST['band'];                
+                $jsonArray['album'] = $_POST['album'];
+                $jsonArray['song'] = $_POST['song'];
                 $jsonArray['author'] = $_SESSION['name'];
+                $jsonArray['tags'] = $_POST['tags'];
 
                 $jsonArray['time']['date'] = date("Y:m:d");
                 $jsonArray['time']['timeStamp'] = date("H:i:s");
@@ -127,11 +136,33 @@
         <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
             <h1 class="pt-2">Create Post</h1>
             <?php
-                if(strlen($error) > 0) {echo $error;}
+                if(strlen($error) > 0) {echo '<h4 class="text-warning">'.$error.'</h4><br>';}
             ?>
             <form method="POST">
-                <label>Title</label><br>
-                <input class="border border-dark" name='title' type="text" required/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col">
+                            <label>Title</label><br>
+                            <input class="border border-dark" name='title' type="text" required/>
+                            <br><br>
+                            <label>Band Name</label><br>
+                            <input class="border border-dark" name='band' type="text" required/>
+                            <br><br>
+                        </div>
+                        <div class="col">
+                            <label>Album Name</label><br>
+                            <input class="border border-dark" name='album' type="text" required/>
+                            <br><br>
+                            <label>Song Name</label><br>
+                            <input class="border border-dark" name='song' type="text" required/>
+                            <br><br>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+                <label>Picture address(optional)</label><br>
+                <input Style="width:407px;" class="border border-dark" name='picture' type="text" />
                 <br><br>
                 <label>Write your post</label><br>
                 <textarea style="width:800px;height:200px" class="border border-dark" name='content' type="text" required></textarea>
