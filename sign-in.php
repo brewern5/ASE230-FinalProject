@@ -23,6 +23,7 @@ if(count($_POST)>0){
             if(count($line)==3 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
                 fclose($fp);
                 $_SESSION['email'] = $line[0];
+                $_SESSION['email'] = $line[2];
                 header('location: index.php');
                 die();
             }
