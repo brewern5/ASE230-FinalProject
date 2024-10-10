@@ -19,8 +19,12 @@ if(count($_POST)>0){
             $line=fgets($fp);
             $line=explode(';',$line);
             
-            if(count($line)==2 && $_POST['email']==$line[0]){
+            if(count($line)==3 && $_POST['email']==$line[0]){
                 $error='The email is already registered';
+                break;
+            }
+            if(count($line)==3 && $_POST['name']==$line[2]){
+                $error='This name is already in use';
                 break;
             }
         }
