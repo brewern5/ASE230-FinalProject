@@ -1,4 +1,3 @@
-
 <?php
     require_once('../auth.php');
 
@@ -11,7 +10,7 @@
 
     function checkPostFields() {
 
-        $error=' ';
+        $error='';
 
         if(!isset($_POST['title'][0])) $error='You must put a title!';
         if(!isset($_POST['content'][0])) $error='You must write content!';

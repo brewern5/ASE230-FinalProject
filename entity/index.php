@@ -9,7 +9,8 @@ $contents=file_get_contents("posts.json");
 $blogdata=json_decode($contents,true);
 
 
-//maybe use this to filter genre
+//variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
+$sortOrder='newest';
 $filter='none';
 
 function displayElement($element,$x) {
@@ -46,7 +47,11 @@ function displayElement($element,$x) {
                         
                         <li><a href="../index.php" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
+
+                        <?php if(isset($_SESSION['email'])) echo
+                        '<li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>' ?>
+
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -72,8 +77,8 @@ function displayElement($element,$x) {
                     <?php } else { ?>
                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
+                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
+                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
                     </div>
                         
                         
@@ -85,7 +90,7 @@ function displayElement($element,$x) {
 
         <div class="border rounded bg-dark mx-5 jumbotron">
             <ul class="nav py-2">
-                <li style="color:blue;" class="px-3 py-2">Sort:</li>
+                <li class="px-3 py-2 text-white">Sort:</li>
                 <li><a class="btn px-2 text-white" href="index.php?x=new">New</a></li>
                 <li><a class="btn px-2 text-white" href="index.php?x=popular">Popular</a></li>
             </ul>

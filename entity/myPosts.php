@@ -11,7 +11,20 @@ $blogdata=json_decode($contents,true);
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+
+    echo    '<div class="container">';
+    echo        '<div class="row">';
+    echo            '<div class="col-10">';
+    echo                '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>';
+    echo            '</div>';
+    echo        '</div>';
+    echo    '</div>';
 
 }
 ?>
@@ -69,8 +82,8 @@ function displayElement($element,$x) {
                     <?php } else { ?>
                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
+                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
+                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
                     </div>
                         
                         
@@ -88,8 +101,14 @@ function displayElement($element,$x) {
 
         <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
 
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
+            <!--prints most recent for the specific user-->
+            <?php 
+                for($x=count($blogdata)-1;$x>=0;$x--) {
+                    if($blogdata[$x]['author']==$_SESSION['name']) {
+                        displayElement($blogdata[$x],$x); 
+                    }
+                }
+            ?>
         </div>
 
         <?php } else { ?>
@@ -97,8 +116,8 @@ function displayElement($element,$x) {
             <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
                 <h1 class="pt-2">You are not signed in</h1>
                 <hr />
-                <a class="btn btn-info me-2 mb-2" href="sign-in.php" role="button">Login</a>
-                <a class="btn btn-warning mb-2" href="sign-up.php" role="button">Sign Up</a>
+                <a class="btn btn-info me-2 mb-2" href="../sign-in.php" role="button">Login</a>
+                <a class="btn btn-warning mb-2" href="../sign-up.php" role="button">Sign Up</a>
             </div>
 
         <?php } ?>

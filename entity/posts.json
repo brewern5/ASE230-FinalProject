@@ -1,29 +1,4 @@
-
 [
-    {
-        "title": "Title 1",
-        "content": "this is the content for title 1",
-        "author": "Danny Poff",
-        "time": {
-            "date": "10-08-2024",
-            "timeStamp": "13:59:16"
-        },
-        "tags": [
-            "metal"
-        ],
-        "likes": 10,
-        "comments": {
-            "numOfComments": 1,
-            "comments": [
-                {
-                    "user": "Joe Schmoe",
-                    "date": "today dumbass",
-                    "commentContent": "Donde esta la pantolens vaquiros",
-                    "likes": 9
-                }
-            ]
-        }
-    },
     {
         "title": "Title 2",
         "content": "this is the content for title 2",
@@ -46,30 +21,10 @@
     {
         "title": "this is title",
         "content": "posty the poster",
-        "author": "",
+        "author": "Danny",
         "time": {
             "date": "2024:10:08",
             "timeStamp": "18:11:03"
-        },
-        "tags": "metal",
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        }
-    },
-    {
-        "title": "this is title",
-        "content": "posty the poster",
-        "author": "",
-        "time": {
-            "date": "2024:10:08",
-            "timeStamp": "18:12:11"
         },
         "tags": "metal",
         "likes": 0,
@@ -172,6 +127,26 @@
             "timeStamp": "19:57:04"
         },
         "tags": "metal",
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "obuyhvutc7riu",
+        "content": "hrsyts6idrutrxrts43aatrtrycuihop;lgfdxcvbn",
+        "author": "",
+        "time": {
+            "date": "2024:10:10",
+            "timeStamp": "17:12:27"
+        },
+        "tags": "jb iui7yih",
         "likes": 0,
         "comments": {
             "numOfComments": 0,

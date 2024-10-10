@@ -43,6 +43,7 @@
                 $jsonArray['title'] = $_POST['title'];
                 $jsonArray['content'] = $_POST['content'];
                 $jsonArray['tags'] = $_POST['tags'];
+                $jsonArray['author'] = $_SESSION['name'];
 
                 $jsonArray['time']['date'] = date("Y:m:d");
                 $jsonArray['time']['timeStamp'] = date("H:i:s");
@@ -52,8 +53,11 @@
                 $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
 
                 file_put_contents('posts.json', $jsonData);
+                header("location: myPosts.php?x=new");
+                die();
             }
         }
+    }
 
 ?>
 
@@ -130,7 +134,7 @@
                 <input class="border border-dark" name='title' type="text" required/>
                 <br><br>
                 <label>Write your post</label><br>
-                <input class="border border-dark" name='content' type="text" required/>
+                <textarea style="width:800px;height:200px" class="border border-dark" name='content' type="text" required></textarea>
                 <br><br>
                 <label>Add tag(s)</label><br>
                 <input class="border border-dark" name='tags' type="text" required/>
@@ -157,9 +161,3 @@
         </footer>
     </div>
 </html>
-<?php 
-    }
-    else{
-        header("location: index.php");
-    }  
-?>

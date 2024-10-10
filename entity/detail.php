@@ -43,7 +43,11 @@ function displayElement($element,$x) { ?>
                         
                         <li><a href="../index.php" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
+
+                        <?php if(isset($_SESSION['email'])) echo'
                         <li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>'?>
+
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -94,8 +98,8 @@ function displayElement($element,$x) { ?>
                         }
                     }
                     fclose($fp);
+                    echo '<h6 class="fw-light">'.$blogdata[0]['author'].' | '.$blogdata[0]['time'][0]['date'].'</h6>' 
                 ?>
-                <?php echo '<h6 class="fw-light">'.$blogdata[0]['author'].' | '.$blogdata[0]['time'][0]['date'].'</h6>' ?>
             </h5>
         </div>
 

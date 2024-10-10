@@ -15,12 +15,20 @@ if(count($_POST)>0){
 
     if(strlen($error)==0){
         $fp=fopen('users.csv.php', 'r');
-        while(!feof($fp)){
+
+        if(str_contains($_POST['name'], ';')) {
+            $error='Do not add a ; to your name';
+        }
+        while(!feof($fp) && strlen($error)==0){
             $line=fgets($fp);
             $line=explode(';',$line);
             
-            if(count($line)==2 && $_POST['email']==$line[0]){
+            if(count($line)==3 && $_POST['email']==$line[0]){
                 $error='The email is already registered';
+                break;
+            }
+            if(count($line)==3 && $_POST['name']==$line[1]){
+                $error='The name is already in use';
                 break;
             }
         }
@@ -28,7 +36,7 @@ if(count($_POST)>0){
         if(strlen($error)==0){
             //open csv file in append mode
             $fp=fopen('users.csv.php', 'a+');
-            fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
+            fputs($fp,$_POST['email'].';'.$_POST['name'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).PHP_EOL);
             fclose($fp);
             header('location: sign-in.php');
             die();
