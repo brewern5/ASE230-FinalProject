@@ -52,9 +52,11 @@
                 $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
 
                 file_put_contents('posts.json', $jsonData);
+                header("location: myPosts.php?x=new");
+                die();
             }
         }
-
+    }
 ?>
 
 <html>
@@ -83,9 +85,3 @@
         </form>
     </body>
 </html>
-<?php 
-    }
-    else{
-        header("location: index.php");
-    }  
-?>
