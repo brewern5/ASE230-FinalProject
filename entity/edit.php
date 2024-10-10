@@ -39,8 +39,12 @@
             if(strlen($error) == 0){
                 $jsonArray['title'] = $_POST['title'];
                 $jsonArray['content'] = $_POST['content'];
-                $jsonArray['tags'] = $_POST['tags'];
+                $jsonArray['picture'] = $_POST['picture'];    
+                $jsonArray['band'] = $_POST['band'];                
+                $jsonArray['album'] = $_POST['album'];
+                $jsonArray['song'] = $_POST['song'];
                 $jsonArray['author'] = $_SESSION['name'];
+                $jsonArray['tags'] = $_POST['tags'];
 
 
                 for($i=0;$i<count($blogdata);$i++) {
@@ -138,8 +142,30 @@
                 if(strlen($error) > 0) {echo $error;}
             ?>
             <form method="POST">
-                <label>Title</label><br>
-                <input value="<?php echo $blogdata[$post_id]['title']; ?>" class="border border-dark" name='title' type="text" required/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col">
+                            <label>Title</label><br>
+                            <input value="<?php echo $blogdata[$post_id]['title']; ?>"class="border border-dark" name='title' type="text" required/>
+                            <br><br>
+                            <label>Band Name</label><br>
+                            <input value="<?php echo $blogdata[$post_id]['band']; ?>"class="border border-dark" name='band' type="text" required/>
+                            <br><br>
+                        </div>
+                        <div class="col">
+                            <label>Album Name</label><br>
+                            <input value="<?php echo $blogdata[$post_id]['album']; ?>" class="border border-dark" name='album' type="text" required/>
+                            <br><br>
+                            <label>Song Name</label><br>
+                            <input value="<?php echo $blogdata[$post_id]['song']; ?>" class="border border-dark" name='song' type="text" required/>
+                            <br><br>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+                <label>Picture address(optional)</label><br>
+                <input value="<?php echo $blogdata[$post_id]['picture']; ?>" Style="width:407px;" class="border border-dark" name='picture' type="text" />
                 <br><br>
                 <label>Write your post</label><br>
                 <textarea style="width:800px;height:200px" class="border border-dark" name='content' type="text" required>

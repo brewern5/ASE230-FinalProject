@@ -2,6 +2,9 @@
     {
         "title": "Title 2",
         "content": "this is the content for title 2",
+        "band": "",
+        "album": "",
+        "song": "",
         "author": "Nate Brewer",
         "time": {
             "date": "10-08-2024",
@@ -19,8 +22,12 @@
         }
     },
     {
-        "title": "this is title",
-        "content": "posty the poster",
+        "title": "Review of dead silence",
+        "content": "Review stuff",
+        "picture": "https:\/\/m.media-amazon.com\/images\/I\/916FLOL8R0L._UF1000,1000_QL80_.jpg",
+        "band": "Whitechapel",
+        "album": "Whitechapel",
+        "song": "Dead Silence",
         "author": "Danny",
         "time": {
             "date": "2024:10:08",
@@ -41,6 +48,9 @@
     {
         "title": "title 10",
         "content": "this is a test",
+        "band": "",
+        "album": "",
+        "song": "",
         "author": "",
         "time": {
             "date": "2024:10:08",
@@ -61,6 +71,9 @@
     {
         "title": "title 10",
         "content": "this is a test",
+        "band": "",
+        "album": "",
+        "song": "",
         "author": "",
         "time": {
             "date": "2024:10:08",
@@ -157,5 +170,53 @@
                 "likes": 0
             }
         }
+    },
+    {
+        "title": "NPC Review",
+        "content": "ounbuenirnepoinfnvkjnkjfvnfdd",
+        "picture": "https:\/\/f4.bcbits.com\/img\/a0042190438_65",
+        "band": "Darknet",
+        "album": "The Internet",
+        "song": "NPC",
+        "author": "Danny",
+        "time": {
+            "date": "2024:10:10",
+            "timeStamp": "18:35:11"
+        },
+        "tags": "metal",
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "StL Review",
+        "content": "                                        Really Cool Song!                                ",
+        "author": "Danny",
+        "time": {
+            "date": "2024:10:10",
+            "timeStamp": "18:45:54"
+        },
+        "tags": "metal",
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        },
+        "picture": "https:\/\/f4.bcbits.com\/img\/a1039294112_10.jpg",
+        "band": "Summoning the Lich",
+        "album": "United in Chaos",
+        "song": "The Nightmare Begins"
     }
 ]
