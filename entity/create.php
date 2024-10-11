@@ -28,10 +28,12 @@
                 "song" => '',
                 'author' => '',
                 'time' => [
-                    'date' => getDateStamp(),
-                    'timeStamp' => getTimeStamp()
+                    'date' => '',
+                    'timeStamp' => ''
                 ],
-                'tags'=> [],
+                'tags'=> [
+                    0 => ''
+                ],
                 'likes' => 0,
                 'comments'=> [
                     'numOfComments' => 0,
@@ -44,7 +46,9 @@
                 ]
             ];
 
+            $error = checkTags($_POST['tags']);
             if(strlen($error) == 0){
+
                 $jsonArray['title'] = $_POST['title'];
                 $jsonArray['content'] = $_POST['content'];
                 $jsonArray['picture'] = $_POST['picture'];    
@@ -52,7 +56,8 @@
                 $jsonArray['album'] = $_POST['album'];
                 $jsonArray['song'] = $_POST['song'];
                 $jsonArray['author'] = $_SESSION['name'];
-                $jsonArray['tags'] = $_POST['tags'];
+                $jsonArray['tags'] = postTags($_POST['tags']);
+
 
                 $jsonArray['time']['date'] = date("Y:m:d");
                 $jsonArray['time']['timeStamp'] = date("H:i:s");
@@ -62,12 +67,12 @@
                 $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
 
                 file_put_contents('posts.json', $jsonData);
-                header("location: myPosts.php?x=new");
-                die();
+
+            header("location: myPosts.php?x=new");
+            die();
             }
         }
     }
-
 ?>
 
 <html>
@@ -80,11 +85,8 @@
     <body class="bg-secondary">
 
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
-
-            <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
+          
+            <?php echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>' ?>
 
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -94,7 +96,8 @@
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="../index.php" class="nav-link px-2">Home</a></li>
+
+                        <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
                         <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                     </ul>
@@ -102,10 +105,7 @@
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                         <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
                     </form>
-
-                    <?php if(isset($_SESSION['email'])) { ?>
-                        
-                    <!--This shows profile information is the user is in a session-->
+                     
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -117,18 +117,6 @@
                             <li><a class="dropdown-item" href="../sign-out.php">Sign out</a></li>
                         </ul>
                     </div>
-                        
-                    <!--This shows sign in and sign up buttons if the user is not in a session-->
-                    <?php } else { ?>
-                       
-                    <div class="text-end">
-                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
-                    </div>
-                        
-                        
-                        
-                    <?php } ?>
                 </div>
             </div>
         </header>
@@ -192,3 +180,9 @@
         </footer>
     </div>
 </html>
+<?php
+    }
+    else{
+        location("header: index.php");
+    }
+

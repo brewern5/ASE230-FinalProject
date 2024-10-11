@@ -24,7 +24,7 @@ if(count($_POST)>0){
                 fclose($fp);
                 $_SESSION['email'] = $line[0];
                 $_SESSION['name'] = $line[2];
-                header('location: index.php');
+                header('location: index.php?x=new');
                 die();
             }
         }

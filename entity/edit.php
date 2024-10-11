@@ -1,15 +1,14 @@
 <?php
     require_once('auth.php');
 
-
-    //opening json to print current elements
-    $contents=file_get_contents("posts.json");
-    $blogdata=json_decode($contents,true);
-
-    $post_id=$_GET['x'];
-      
     if(strlen(isLogged())>0){
 
+        //opening json to print current elements
+        $contents=file_get_contents("posts.json");
+        $blogdata=json_decode($contents,true);
+
+        $post_id=$_GET['x'];
+      
         $error = checkPostFields();
 
         if(count($_POST)>0){
@@ -19,10 +18,14 @@
             [
                 'title' => '',
                 'content' => '',
+                'picture' => '',
+                'band' => '',
+                'album' => '',
+                'song' => '',
                 'author' => '',
                 'time' => [
-                    'date' => $blogdata[$post_id]['time']['date'],
-                    'timeStamp' => $blogdata[$post_id]['time']['timeStamp']
+                    'date' => getDateStamp(),
+                    'timeStamp' => getTimeStamp()
                 ],
                 'tags'=> [],
                 'likes' => 0,
@@ -36,6 +39,7 @@
                     ]
                 ]
             ];
+            $error = checkTags($_POST['tags']);
             if(strlen($error) == 0){
                 $jsonArray['title'] = $_POST['title'];
                 $jsonArray['content'] = $_POST['content'];
@@ -44,7 +48,7 @@
                 $jsonArray['album'] = $_POST['album'];
                 $jsonArray['song'] = $_POST['song'];
                 $jsonArray['author'] = $_SESSION['name'];
-                $jsonArray['tags'] = $_POST['tags'];
+                $jsonArray['tags'] = postTags($_POST['tags']);
 
 
                 for($i=0;$i<count($blogdata);$i++) {
@@ -85,9 +89,7 @@
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
+            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';?>
 
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -173,7 +175,7 @@
                 </textarea>
                 <br><br>
                 <label>Add tag(s)</label><br>
-                <input value="<?php echo $blogdata[$post_id]['tags']; ?>" class="border border-dark" name='tags' type="text" required/>
+                <input value="<?php foreach ($blogdata[$post_id]['tags'] as $tag){ echo $tag.' ';} ?>" class="border border-dark" name='tags' type="text" required/>
                 <br><br>
                 <button class="btn btn-warning text-dark" type="submit">Post</button>
             </form>
