@@ -19,7 +19,7 @@ function displayElement($element,$x) {
     '<div class="cotainer">
         <div class="row">
             <h1 class="col-sm-5 width-20%">
-                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
+                    <a href="entity/detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
             </h1>
             <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
             <h5 class="col-sm-4 width-20%">
