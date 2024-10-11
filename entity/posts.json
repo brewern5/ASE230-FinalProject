@@ -54,7 +54,6 @@
         }
     },
     {
-
         "title": "Irreversible review",
         "content": "                    THis is the greatest song I have ever listened to!!!                ",
         "picture": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/3\/3f\/Erra_Drift_Album_Cover_Art.jpg",
@@ -82,56 +81,5 @@
                 "likes": 0
             }
         }
-    },
-    {
-        "title": "123",
-        "content": "123123",
-        "picture": "",
-        "band": "123",
-        "album": "123",
-        "song": "123",
-        "author": "Nathaniel Brewer\r\n",
-        "time": {
-            "date": "2024:10:11",
-            "timeStamp": "06:07:21"
-        },
-        "tags": [
-            "#yote",
-            ""
-        ],
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        }
-    },
-    {
-        "title": "StL Review",
-        "content": "                                        Really Cool Song!                                ",
-        "author": "Danny",
-        "time": {
-            "date": "2024:10:10",
-            "timeStamp": "18:45:54"
-        },
-        "tags": "metal",
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        },
-        "picture": "https:\/\/f4.bcbits.com\/img\/a1039294112_10.jpg",
-        "band": "Summoning the Lich",
-        "album": "United in Chaos",
-        "song": "The Nightmare Begins"
     }
 ]

@@ -20,6 +20,7 @@
 
     }
     function checkTags($tags){
+
         $tagError = '';
         $tag = substr($tags, 1);
 
@@ -111,4 +112,5 @@
                     </div>';
         }
     }
+
 ?>
