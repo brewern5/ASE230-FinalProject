@@ -11,7 +11,20 @@ $blogdata=json_decode($contents,true);
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+
+    echo    '<div class="container">';
+    echo        '<div class="row">';
+    echo            '<div class="col-10">';
+    echo                '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>';
+    echo            '</div>';
+    echo        '</div>';
+    echo    '</div>';
 
 }
 ?>
@@ -29,7 +42,7 @@ function displayElement($element,$x) {
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
+            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';
                   else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
             ?>
 
@@ -41,11 +54,9 @@ function displayElement($element,$x) {
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="../index.php" class="nav-link px-2">Home</a></li>
+                        <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
                         <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
-                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>
-
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -63,7 +74,7 @@ function displayElement($element,$x) {
                            <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="sign-out.php">Sign out</a></li>
+                            <li><a class="dropdown-item" href="../sign-out.php">Sign out</a></li>
                         </ul>
                     </div>
                         
@@ -71,8 +82,8 @@ function displayElement($element,$x) {
                     <?php } else { ?>
                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
+                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
+                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
                     </div>
                         
                         
@@ -82,13 +93,34 @@ function displayElement($element,$x) {
             </div>
         </header>
 
+        <?php if(isLogged()) { ?>
 
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <a class="btn btn-info col-2 my-2" href="create.php" role="button">create new post</a>
-
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
+        <div class="border border-bottom-0 rounded-top bg-dark mx-5 text-white">
+            <a class="btn btn-info m-2" href="create.php" role="button">create new post</a>
         </div>
+
+        <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
+
+            <!--prints most recent for the specific user-->
+            <?php 
+                for($x=count($blogdata)-1;$x>=0;$x--) {
+                    if($blogdata[$x]['author']==$_SESSION['name']) {
+                        displayElement($blogdata[$x],$x); 
+                    }
+                }
+            ?>
+        </div>
+
+        <?php } else { ?>
+
+            <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
+                <h1 class="pt-2">You are not signed in</h1>
+                <hr />
+                <a class="btn btn-info me-2 mb-2" href="../sign-in.php" role="button">Login</a>
+                <a class="btn btn-warning mb-2" href="../sign-up.php" role="button">Sign Up</a>
+            </div>
+
+        <?php } ?>
 
 
     </body>

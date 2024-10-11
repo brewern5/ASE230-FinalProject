@@ -2,7 +2,7 @@
 
 //this page will post the top "review" for each genre that anyone can view
 
-require_once('../auth.php');
+require_once('auth.php');
 
 //opens json to print post info
 $contents=file_get_contents("posts.json");
@@ -15,7 +15,19 @@ $filter='none';
 
 function displayElement($element,$x) {
    
-    echo '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo 
+    '<div class="cotainer">
+        <div class="row">
+            <h1 class="col-sm-5 width-20%">
+                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
+            </h1>
+            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
+            <h5 class="col-sm-4 width-20%">
+                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
+            </h5>
+        </div>
+    </div>
+    ';  
 
 }
 ?>
@@ -33,7 +45,7 @@ function displayElement($element,$x) {
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
+            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';
                   else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
             ?>
 
@@ -45,10 +57,10 @@ function displayElement($element,$x) {
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="../index.php" class="nav-link px-2">Home</a></li>
+                        <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
                         <?php if(isset($_SESSION['email'])) echo
-                        '<li><a href="post.php" class="nav-link px-2">My Posts</a></li>
+                        '<li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                         <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>' ?>
                     </ul>
 
@@ -78,9 +90,6 @@ function displayElement($element,$x) {
                         <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
                         <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
                     </div>
-                        
-                        
-                        
                     <?php } ?>
                 </div>
             </div>
@@ -106,9 +115,7 @@ function displayElement($element,$x) {
             <!--prints reverse will print most popular-->
             <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
         </div>
-
         <?php } ?>
-
     </body>
 
     <div class="container bg-secondary">
