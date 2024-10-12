@@ -102,17 +102,10 @@ function displayElement($element,$x) {
 
         <br>
 
-        <?php if($_GET['x']=='new') { ?>
         <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
             <!--prints most recent-->
             <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
         </div>
-        <?php } else {?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } ?>
     </body>
 
     <div class="container bg-secondary">
