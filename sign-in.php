@@ -35,7 +35,6 @@ if(count($_POST)>0){
         else {
             $error='This email is not in our system';
         }
-       
     }
 }
 

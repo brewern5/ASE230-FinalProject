@@ -1,13 +1,11 @@
 <?php
 
 //this page will post the top "review" for each genre that anyone can view
-
 require_once('auth.php');
 
 //opens json to print post info
 $contents=file_get_contents("entity\posts.json");
 $blogdata=json_decode($contents,true);
-
 
 //variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
 $sortOrder='newest';
@@ -28,7 +26,6 @@ function displayElement($element,$x) {
         </div>
     </div>
     ';  
-
 }
 ?>
 
@@ -136,6 +133,4 @@ function displayElement($element,$x) {
     </div>
     
 </html>
-
-
 

@@ -32,9 +32,6 @@ function checkFields($x) {
         if($_POST['password']!=$_POST['confirm_password']) $error='Your passwords do not match';
 
     }
-   
-
-
     return $error;
 }
 

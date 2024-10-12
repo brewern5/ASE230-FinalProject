@@ -9,11 +9,9 @@ if(islogged()){
 
 $error='';
 if(count($_POST)>0){
-
     //$error = checkFields();
     //completness
     $error='';
-
     if(strlen($error)==0){
         $fp=fopen('users.csv.php', 'r');
         while(!feof($fp)){
@@ -44,6 +42,7 @@ if(count($_POST)>0){
 
 <html>
     <head>
+
         <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
