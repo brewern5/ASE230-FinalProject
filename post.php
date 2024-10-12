@@ -1,34 +1,17 @@
-<?php
-
-//this page will post the top "review" for each genre that anyone can view
-
+    <?php
 require_once('auth.php');
 
-//opens json to print post info
+
+//opening json to print page
 $contents=file_get_contents("posts.json");
 $blogdata=json_decode($contents,true);
 
-
-//variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
-$sortOrder='newest';
-$filter='none';
-
-function displayElement($element,$x) {
+function displayElement($element,$x) { ?>
    
-    echo 
-    '<div class="cotainer">
-        <div class="row">
-            <h1 class="col-sm-5 width-20%">
-                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
-            </h1>
-            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
-            <h5 class="col-sm-4 width-20%">
-                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
-            </h5>
-        </div>
-    </div>
-    ';  
+    <h1><a href="details.php?x=<?php echo $x;?>"><?php echo $element['title']; ?></a></h1>
+    <hr>
 
+<?php 
 }
 ?>
 
@@ -39,16 +22,16 @@ function displayElement($element,$x) {
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
+
     </head>
-    <body class="bg-secondary">
+    <body>
+
+        <header>    <!-- will display user's name if they are logged in -->
+            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
+                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; ?>
+        </header>
         
-        <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
-
-            <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
-
+        <header class="p-3 mb-3 border-bottom">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
@@ -57,11 +40,9 @@ function displayElement($element,$x) {
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
-                        <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) echo
-                        '<li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
-                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>' ?>
+                        <li><a href="index.php" class="nav-link px-2">Home</a></li>
+                        <li><a href="detail.php" class="nav-link px-2">Posts</a></li>
+                        <li><a href="entity/myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -79,7 +60,7 @@ function displayElement($element,$x) {
                            <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../sign-out.php">Sign out</a></li>
+                            <li><a class="dropdown-item" href="sign-out.php">Sign out</a></li>
                         </ul>
                     </div>
                         
@@ -87,44 +68,26 @@ function displayElement($element,$x) {
                     <?php } else { ?>
                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
+                        <a class="btn btn-outline-dark me-2" href="sign-in.php" role="button">Login</a>
+                        <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
                     </div>
+                        
+                        
+                        
                     <?php } ?>
                 </div>
             </div>
         </header>
 
-        <div class="border rounded bg-dark mx-5 jumbotron">
-            <ul class="nav py-2">
-                <li class="px-3 py-2 text-white">Sort:</li>
-                <li><a class="btn px-2 text-white" href="index.php?x=new">New</a></li>
-                <li><a class="btn px-2 text-white" href="index.php?x=popular">Popular</a></li>
-            </ul>
-        </div>
 
-        <br>
 
-        <?php if($_GET['x']=='new') { ?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } else {?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } ?>
-    </body>
-
-    <div class="container bg-secondary">
+        <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
                 </a>
-                <span class="mb-3 mb-md-0 text-white">© 2024 Nate Brewer & Danny Poff</span>
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Nate Brewer & Danny Poff</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -134,8 +97,4 @@ function displayElement($element,$x) {
             </ul>
         </footer>
     </div>
-    
 </html>
-
-
-

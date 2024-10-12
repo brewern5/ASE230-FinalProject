@@ -2,32 +2,29 @@
 
 //this page will post the top "review" for each genre that anyone can view
 
-require_once('auth.php');
+require_once('../auth.php');
 
 //opens json to print post info
 $contents=file_get_contents("posts.json");
 $blogdata=json_decode($contents,true);
 
 
-//variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
-$sortOrder='newest';
-$filter='none';
-
 function displayElement($element,$x) {
    
-    echo 
-    '<div class="cotainer">
-        <div class="row">
-            <h1 class="col-sm-5 width-20%">
-                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
-            </h1>
-            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
-            <h5 class="col-sm-4 width-20%">
-                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
-            </h5>
-        </div>
-    </div>
-    ';  
+
+    echo    '<div class="container">';
+    echo        '<div class="row">';
+    echo            '<div class="col-10">';
+    echo                '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>';
+    echo            '</div>';
+    echo            '<div class="col-1">';
+    echo                '<a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>';
+    echo            '</div>';
+    echo        '</div>';
+    echo    '</div>';
 
 }
 ?>
@@ -59,9 +56,7 @@ function displayElement($element,$x) {
                         
                         <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) echo
-                        '<li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
-                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>' ?>
+                        <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -90,32 +85,44 @@ function displayElement($element,$x) {
                         <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
                         <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
                     </div>
+                        
+                        
+                        
                     <?php } ?>
                 </div>
             </div>
         </header>
 
-        <div class="border rounded bg-dark mx-5 jumbotron">
-            <ul class="nav py-2">
-                <li class="px-3 py-2 text-white">Sort:</li>
-                <li><a class="btn px-2 text-white" href="index.php?x=new">New</a></li>
-                <li><a class="btn px-2 text-white" href="index.php?x=popular">Popular</a></li>
-            </ul>
+        <?php if(isLogged()) { ?>
+
+        <div class="border border-bottom-0 rounded-top bg-dark mx-5 text-white">
+            <a class="btn btn-info m-2" href="create.php" role="button">create new post</a>
         </div>
 
-        <br>
+        <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
 
-        <?php if($_GET['x']=='new') { ?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
+            <!--prints most recent for the specific user-->
+            <?php 
+                for($x=count($blogdata)-1;$x>=0;$x--) {
+                    if($blogdata[$x]['author']==$_SESSION['name']) {
+                        displayElement($blogdata[$x],$x); 
+                    }
+                }
+            ?>
         </div>
-        <?php } else {?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
+
+        <?php } else { ?>
+
+            <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
+                <h1 class="pt-2">You are not signed in</h1>
+                <hr />
+                <a class="btn btn-info me-2 mb-2" href="../sign-in.php" role="button">Login</a>
+                <a class="btn btn-warning mb-2" href="../sign-up.php" role="button">Sign Up</a>
+            </div>
+
         <?php } ?>
+
+
     </body>
 
     <div class="container bg-secondary">
