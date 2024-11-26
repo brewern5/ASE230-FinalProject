@@ -7,7 +7,7 @@ require_once('auth.php');
 $error='';
 if(count($_POST)>0){
     $error = checkFields();
-    //completness
+
     $error='';
     if(strlen($error)==0){
         require_once('db.php');
