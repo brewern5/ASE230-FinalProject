@@ -1,13 +1,11 @@
 <?php
 
 //this page will post the top "review" for each genre that anyone can view
-
 require_once('auth.php');
 
 //opens json to print post info
 $contents=file_get_contents("entity\posts.json");
 $blogdata=json_decode($contents,true);
-
 
 //variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
 $sortOrder='newest';
@@ -28,7 +26,6 @@ function displayElement($element,$x) {
         </div>
     </div>
     ';  
-
 }
 ?>
 
@@ -45,9 +42,7 @@ function displayElement($element,$x) {
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
+            <?php displayHeader(); ?>
 
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -105,17 +100,10 @@ function displayElement($element,$x) {
 
         <br>
 
-        <?php if($_GET['x']=='new') { ?>
         <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
             <!--prints most recent-->
             <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
         </div>
-        <?php } else {?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } ?>
     </body>
 
     <div class="container bg-secondary">
@@ -136,6 +124,4 @@ function displayElement($element,$x) {
     </div>
     
 </html>
-
-
 

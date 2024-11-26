@@ -1,36 +1,36 @@
 <?php
-require_once('auth.php');
+    require_once('auth.php');
 
-//opening json to print page
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
+    //opening json to print page
+    $contents=file_get_contents("posts.json");
+    $blogdata=json_decode($contents,true);
 
-//getting id of page
-$post_id=$_GET['x'];
+    //getting id of page
+    $post_id=$_GET['x'];
 
-//------counting views of this page-----//
-//reading elements
-$fp=fopen('visitors.csv','r');
-$i=0;
-$tempR = [];
-while(! feof($fp)) {
-  $temp = fgets($fp);
-  if(explode(';',$temp)[0] == $post_id){
-    $tempR[$i]=$post_id.';'.(explode(';',$temp)[1]+1).PHP_EOL;
-  }
-  else {
-    $tempR[$i]=$temp;
-  }
-  $i++;
-}
-fclose($fp);
+    //------counting views of this page-----//
+    //reading elements
+    $fp=fopen('visitors.csv','r');
+    $i=0;
+    $tempR = [];
+    while(! feof($fp)) {
+    $temp = fgets($fp);
+    if(explode(';',$temp)[0] == $post_id){
+        $tempR[$i]=$post_id.';'.(explode(';',$temp)[1]+1).PHP_EOL;
+    }
+    else {
+        $tempR[$i]=$temp;
+    }
+    $i++;
+    }
+    fclose($fp);
 
-//writing elements
-$fp=fopen('visitors.csv','w');
-  for($i=0;$i<count($tempR);$i++) {
-    fputs($fp,$tempR[$i]);
-  }
-fclose($fp);
+    //writing elements
+    $fp=fopen('visitors.csv','w');
+    for($i=0;$i<count($tempR);$i++) {
+        fputs($fp,$tempR[$i]);
+    }
+    fclose($fp);
 
 ?>
 

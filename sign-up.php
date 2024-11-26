@@ -1,24 +1,23 @@
 <?php
 //SIGNUP
 require_once('auth.php');
-/*
-if(islogged()){
-    header('location: index.php');
-    die();
-} */
+
+
 
 $error='';
 if(count($_POST)>0){
-
-    //$error = checkFields();
+    $error = checkFields();
     //completness
     $error='';
-
     if(strlen($error)==0){
-        $fp=fopen('users.csv.php', 'r');
-        while(!feof($fp)){
-            $line=fgets($fp);
-            $line=explode(';',$line);
+        require_once('db.php');
+
+        $query=$db->prepare('INSERT INTO users(email,firstname,lastname,password) VALUES(?,?,?,?)');
+
+        /*$fp=fopen('users.csv.php', 'r');
+        //while(!feof($fp)){
+            //$line=fgets($fp);
+            //$line=explode(';',$line);
             
             if(count($line)==3 && $_POST['email']==$line[0]){
                 $error='The email is already registered';
@@ -28,13 +27,14 @@ if(count($_POST)>0){
                 $error='This name is already in use';
                 break;
             }
-        }
-        fclose($fp);
+        }*/
+        //fclose($fp);
         if(strlen($error)==0){
             //open csv file in append mode
-            $fp=fopen('users.csv.php', 'a+');
-            fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).';'.$_POST['name'].PHP_EOL);
-            fclose($fp);
+            //$fp=fopen('users.csv.php', 'a+');
+            //fputs($fp,$_POST['email'].';'.password_hash($_POST['password'],PASSWORD_DEFAULT).';'.$_POST['name'].PHP_EOL);
+            //fclose($fp);
+            $query->execute([$_POST['email'],$_POST['firstname'], $_POST['lastname'], password_hash($_POST['password'],PASSWORD_DEFAULT)]);
             header('location: sign-in.php');
             die();
         }
@@ -44,6 +44,7 @@ if(count($_POST)>0){
 
 <html>
     <head>
+
         <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -57,8 +58,11 @@ if(count($_POST)>0){
         if(strlen($error)>0) echo $error;
         ?>
         <form method="POST">
-            <label>NAME</label><br>
-            <input class="border border-dark" name='name' type="text" required/>
+            <label>FIRST NAME</label><br>
+            <input class="border border-dark" name='firstname' type="text" required/>
+            <br><br>
+            <label>LAST NAME</label><br>
+            <input class="border border-dark" name='lastname' type="text" required/>
             <br><br>
             <label>EMAIL</label><br>
             <input class="border border-dark" name='email' type="email" required/>
