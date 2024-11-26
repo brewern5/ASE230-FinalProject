@@ -1,11 +1,27 @@
 <?php
 session_start();
 
+require_once('dbfunctions.php');
 
 function isLogged() {
     if(isset($_SESSION['email'])){
         return $_SESSION['email'];
     }
+}
+
+function displayHeader(){
+    $header='';
+    if(isset($_SESSION['email'])){
+        $header = '<h1> Welcome '.$_SESSION['email'].' to The Metal Detector </h1>';
+    }  
+    else {
+        $header = '<h1> Welcome to The Metal Detector </h1>';
+    }
+    return $header;
+}
+//if user is not logged in - some options will not display
+function displayNav(){
+    
 }
 
 function checkFields($x) {
@@ -26,7 +42,8 @@ function checkFields($x) {
 
         //completeness
         if(!isset($_POST['confirm_password'][0])) $error=('You must confirm your password');
-        if(!isset($_POST['name'][0])) $error=('You must enter your name');
+        if(!isset($_POST['firstname'][0])) $error=('You must enter your first name');
+        if(!isset($_POST['lastname'][0])) $error=('You must enter your last name');
 
         //correctness
         if($_POST['password']!=$_POST['confirm_password']) $error='Your passwords do not match';
@@ -35,7 +52,15 @@ function checkFields($x) {
     return $error;
 }
 
-function checkIfInDB($fileName, $email, $password=null) {
+function checkIfInDB($email, $password=null) {
+
+    $user=[];
+    require_once('db.php');
+
+    //$query=$db->prepare('SELECT * users WHERE email=? AND password=?');
+
+    //$query->execute
+
     $fp=fopen('users.csv.php', 'r');
     while(!feof($fp)){
         $line=fgets($fp);

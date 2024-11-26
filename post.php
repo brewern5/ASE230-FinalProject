@@ -27,8 +27,7 @@ function displayElement($element,$x) { ?>
     <body>
 
         <header>    <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; ?>
+            <?php displayHeader(); ?>
         </header>
         
         <header class="p-3 mb-3 border-bottom">
@@ -71,15 +70,10 @@ function displayElement($element,$x) { ?>
                         <a class="btn btn-outline-dark me-2" href="sign-in.php" role="button">Login</a>
                         <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
                     </div>
-                        
-                        
-                        
                     <?php } ?>
                 </div>
             </div>
         </header>
-
-
 
         <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
