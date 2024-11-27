@@ -4,31 +4,31 @@
 
 require_once('auth.php');
 
-//opens json to print post info
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
-
-
 //variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
 $sortOrder='newest';
 $filter='none';
 
-function displayElement($element,$x) {
-   
-    echo 
-    '<div class="cotainer">
-        <div class="row">
-            <h1 class="col-sm-5 width-20%">
-                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
-            </h1>
-            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
-            <h5 class="col-sm-4 width-20%">
-                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
-            </h5>
-        </div>
-    </div>
-    ';  
+function displayElement($db, $posts) {
 
+    foreach($posts as $post){
+
+        $tags = getTagsByPostID($db, $post['post_ID']);
+        $user_id = getUserID($db, $post['post_ID']);
+
+        echo 
+        '<div class="cotainer">
+            <div class="row">
+                <h1 class="col-sm-5 width-20%">
+                        <a href="detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
+                </h1>
+                <p class = col-sm-2>'; foreach($tags as $tag) {echo $tag." ";} echo '</p>
+                <h5 class="col-sm-4 width-20%">
+                    <a href="" class="text-decoration-none">By: '.$user_id.'</a>
+                </h5>
+            </div>
+        </div>
+        ';  
+    }
 }
 ?>
 
@@ -45,9 +45,7 @@ function displayElement($element,$x) {
         <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['name'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
+            <?php displayHeader(); ?>
 
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -59,38 +57,14 @@ function displayElement($element,$x) {
                         
                         <li><a href="../index.php?x=new" class="nav-link px-2">Home</a></li>
                         <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) echo
-                        '<li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
-                        <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>' ?>
+                        <?php displayLoggedPost(true); ?>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                         <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
                     </form>
 
-                    <?php if(isset($_SESSION['email'])) { ?>
-                        
-                    <!--This shows profile information is the user is in a session-->
-                    <div class="dropdown text-end">
-                        <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                        </a>
-                        <ul class="dropdown-menu text-small" style="">
-                           <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../sign-out.php">Sign out</a></li>
-                        </ul>
-                    </div>
-                        
-                    <!--This shows sign in and sign up buttons if the user is not in a session-->
-                    <?php } else { ?>
-                       
-                    <div class="text-end">
-                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
-                    </div>
-                    <?php } ?>
+                    <?php displayNav(true); ?>
                 </div>
             </div>
         </header>
@@ -105,17 +79,14 @@ function displayElement($element,$x) {
 
         <br>
 
-        <?php if($_GET['x']=='new') { ?>
         <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
+ 
+            <?php 
+            require_once('../db.php');
+            displayElement($db, displayRecent($db), true);
+            ?>
         </div>
-        <?php } else {?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } ?>
+
     </body>
 
     <div class="container bg-secondary">

@@ -27,8 +27,7 @@ function displayElement($element,$x) { ?>
     <body>
 
         <header>    <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; ?>
+            <?php displayHeader(); ?>
         </header>
         
         <header class="p-3 mb-3 border-bottom">
@@ -42,44 +41,17 @@ function displayElement($element,$x) { ?>
                         
                         <li><a href="index.php" class="nav-link px-2">Home</a></li>
                         <li><a href="detail.php" class="nav-link px-2">Posts</a></li>
-                        <li><a href="entity/myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
+                        <?php displayLoggedPost();
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                         <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
                     </form>
 
-                    <?php if(isset($_SESSION['email'])) { ?>
-                        
-                    <!--This shows profile information is the user is in a session-->
-                    <div class="dropdown text-end">
-                        <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                        </a>
-                        <ul class="dropdown-menu text-small" style="">
-                           <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="sign-out.php">Sign out</a></li>
-                        </ul>
-                    </div>
-                        
-                    <!--This shows sign in and sign up buttons if the user is not in a session-->
-                    <?php } else { ?>
-                       
-                    <div class="text-end">
-                        <a class="btn btn-outline-dark me-2" href="sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
-                    </div>
-                        
-                        
-                        
-                    <?php } ?>
+                    <?php displayNav(); ?>
                 </div>
             </div>
         </header>
-
-
 
         <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">

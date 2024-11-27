@@ -1,36 +1,36 @@
 <?php
-require_once('auth.php');
+    require_once('auth.php');
 
-//opening json to print page
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
+    //opening json to print page
+    $contents=file_get_contents("posts.json");
+    $blogdata=json_decode($contents,true);
 
-//getting id of page
-$post_id=$_GET['x'];
+    //getting id of page
+    $post_id=$_GET['x'];
 
-//------counting views of this page-----//
-//reading elements
-$fp=fopen('visitors.csv','r');
-$i=0;
-$tempR = [];
-while(! feof($fp)) {
-  $temp = fgets($fp);
-  if(explode(';',$temp)[0] == $post_id){
-    $tempR[$i]=$post_id.';'.(explode(';',$temp)[1]+1).PHP_EOL;
-  }
-  else {
-    $tempR[$i]=$temp;
-  }
-  $i++;
-}
-fclose($fp);
+    //------counting views of this page-----//
+    //reading elements
+    $fp=fopen('visitors.csv','r');
+    $i=0;
+    $tempR = [];
+    while(! feof($fp)) {
+        $temp = fgets($fp);
+        if(explode(';',$temp)[0] == $post_id){
+            $tempR[$i]=$post_id.';'.(explode(';',$temp)[1]+1).PHP_EOL;
+        }
+        else {
+            $tempR[$i]=$temp;
+        }
+        $i++;
+    }
+    fclose($fp);
 
-//writing elements
-$fp=fopen('visitors.csv','w');
-  for($i=0;$i<count($tempR);$i++) {
-    fputs($fp,$tempR[$i]);
-  }
-fclose($fp);
+    //writing elements
+    $fp=fopen('visitors.csv','w');
+    for($i=0;$i<count($tempR);$i++) {
+            fputs($fp,$tempR[$i]);
+    }
+    fclose($fp);
 
 ?>
 
@@ -46,8 +46,8 @@ fclose($fp);
     <body>
 
         <header>    <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; ?>
+            <?php 
+                $header = displayHeader(); ?>
         </header>
         
         <header class="p-3 mb-3 border-bottom">
