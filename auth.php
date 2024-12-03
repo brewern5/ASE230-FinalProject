@@ -19,11 +19,86 @@ function displayHeader(){
     }
     return $header;
 }
-//if user is not logged in - some options will not display
-function displayNav(){
-    
+
+function ifPage($pageName, $level) {
+    $main="/ASE230/ASE230-FinalProject-poffd2/";
+    $entity="/ASE230/ASE230-FinalProject-poffd2/entity/";
+    if($_SERVER['SCRIPT_NAME'] == $main.$pageName && $level == 1) {
+        echo "currentloc";
+    }
+    if($_SERVER['SCRIPT_NAME'] == $entity.$pageName && $level == 2) {
+        echo "currentloc";
+    }
 }
 
+//helps the navbar send user to the correct place based on where they currently are
+function ifEntity($level) {
+    if(str_contains($_SERVER['SCRIPT_NAME'], "/entity") && $level == "1") {
+        echo "../";
+    }
+    else if(!str_contains($_SERVER['SCRIPT_NAME'], "/entity") && $level == "2") {
+        echo "entity/";
+    }
+}
+
+function displayNav(){ ?>
+        <header class="tab">
+
+            <!-- will display user\'s name if they are logged in -->
+            <?php echo displayHeader(); ?> 
+
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        
+                        <!--Nav bar buttons-->
+                        <li><a href="<?php ifEntity("1"); ?>index.php?x=new" class="<?php ifPage("index.php", "1") ?> nav px-2">Home</a></li>
+                        <li><a href="<?php ifEntity("2"); ?>index.php?x=new" class="<?php ifPage("index.php", "2") ?> nav px-2">Posts</a></li>
+                        <?php if(isset($_SESSION['email'])) { ?>
+                            <li><a href="<?php ifEntity("2"); ?>myPosts.php?x=new" class="<?php ifPage("myPosts.php", "2") ?> nav px-2">My Posts</a></li>
+                            <li><a href="<?php ifEntity("2"); ?>create.php" class="<?php ifPage("create.php", "2") ?> nav px-2">Create New Post</a></li>
+                        <?php }?>
+                    </ul>
+
+                    <!--Search Bar-->
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                        <input type="search" class="textBox form-control" placeholder="Search..." aria-label="Search">
+                    </form>
+
+                    <?php if(isset($_SESSION['email'])) { ?>
+                        
+                    <!--This shows profile information is the user is in a session-->
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" style="">
+                           <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?php ifEntity("1"); ?>sign-out.php">Sign out</a></li>
+                        </ul>
+                    </div>
+                        
+                    <!--This shows sign in and sign up buttons if the user is not in a session-->
+                    <?php } else { ?>
+                       
+                    <div class="text-end">
+                        <a class="btn button1 me-2" href="<?php ifEntity("1"); ?>sign-in.php" role="button">Login</a>
+                        <a class="btn button2" href="<?php ifEntity("1"); ?>sign-up.php" role="button">Sign Up</a>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </header>
+        <?php 
+}
+
+//if user is not logged in - some options will not display
 function checkFields($x) {
     $error='';
     
