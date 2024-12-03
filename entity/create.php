@@ -13,7 +13,7 @@
             $error = checkPostFields();
 
             require_once('../db.php');
-            require_once('..dbfunctions.php');
+            require_once('../dbfunctions.php');
 
             //posts DB
             $query=$db->prepare(
@@ -45,8 +45,9 @@
 
                 $post_id = getPostID($db, $_POST['title']); 
 
-                $tagArray = postTags($_POST['tags']);
+                require_once('post_functions.php'); 
 
+                $tagArray = postTags($_POST['tags']);
 
                 foreach($tagArray as $tag){
                     $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');

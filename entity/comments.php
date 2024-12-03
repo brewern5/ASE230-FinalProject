@@ -13,77 +13,34 @@ function displayElement($db, $post_id) {
 
     $tags = displayTags($db, $post_id);
 
+
+    if(strlen(isLogged())>0){
+        checkOwner($post['user_ID'], $post_id);
+    }
     echo '
         <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
             <div class="row">
                 <div class="col-5">
-                    '.$pic.'
+                    '.displayPic($pic).'
                 </div>
                 
                 <div class="col-7 text-center">
                     <h1 class="">'.$post['title'].'</h1>
-                    <h3 class="">Band: '.$post['band'].' || Album: '.$post['album'].'</h3>
+                    <h3 class="">Band:'.$post['band'].' || Album: '.$post['album'].'</h3>
                     <p>Song: '.$post['song'].'</p>
                     <p>Tag(s): '.$tags.' <p>
-                    '.(strlen(isLogged()) > 0 ? checkOwner($post['user_ID'], $post_id) : null).'
                 </div>
             </div>
             <hr>
             <div class="container">
                 <div class="row">
-                    <h4 class="text-center">
+                    <h3 class="text-center">
                         '.$post['content'].'
-                    </h4>
-                </div>
-                <hr>
-                <div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-10">
-                                <p> Comments : 2 </p>
-                            </div>
-                            <div class="col-2 text-left">
-                                <p> Likes : '.$post['likes'].' </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-10">
-                        <form method="POST">
-                            <div class="row">
-                                <div class="col-3">
-                                    <label>Comment on this post:</label><br>
-                                </div>
-                                <div class="col-7">
-                                    <textarea style="width:500px;height:55px" class="border border-dark" name="comment" type="text" required/></textarea>
-                                </div>
-                                <div class="col-1">
-                                    <button class="btn btn-warning text-dark" type="submit">Post</button>
-                                </div>
-                            </div>
-                        </form>  
-                    </div>
-                    <div class="col-2">
-                        '.displayPostLikebutton($db, $post_id, $post['likes']).'
-                    </div>
+                    </h3>
                 </div>
             </div>
-            <hr>
         </div>';
-        displayComments($db, $post_id);
 }
-
-if(count($_POST)>0){
-
-    require_once('../dbfunctions.php');
-
-    createComment($db, $post_id, $_POST['comment']);
-
-    header('location: detail.php?x='.$post_id);
-
-}
-
 ?>
 
 <html>

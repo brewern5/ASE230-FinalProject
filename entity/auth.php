@@ -12,12 +12,12 @@
     //make it so this checks the user_id with the name in the DB
     function checkOwner($post_id, $x){
         if($post_id==$_SESSION['id']){
-            echo'   <div class="container">
+            return'   <div class="container">
                         <div class="row">
-                            <div class="col-sm-2">
+                            <div class="col-sm-7">
                                 <a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>
                             </div>
                         </div>

@@ -7,7 +7,6 @@ if(count($_POST)>0){
 
     //completness
     $error = checkFields(0);
-    $isEmail = false;
 
     if(strlen($error)==0){
 
@@ -15,20 +14,17 @@ if(count($_POST)>0){
         $query=$db->prepare('SELECT * FROM users WHERE email=?');
 
         $query->execute([$_POST['email']]);
-        $user = $query->fetchAll();
-
-        if(count($user) <= 0){
-            $error = 'Your Email is wrong!';
-        }
+        $user = $query->fetch();
 
         if (checkIfInDB($user, $_POST['email'],$_POST['password'])){
-            $_SESSION['id'] = $user[0]['ID'];
-            $_SESSION['name'] = $user[0]['firstname'];
+            $_SESSION['id'] = $user['user_ID'];
+            $_SESSION['name'] = $user['firstname'];
             header('location: index.php?x=new');
             die();
         }
-
-        $error = 'Your Password is wrong!';
+        else{
+            $error = 'Your Email or Password is wrong!';
+        }
     }
 }
 
