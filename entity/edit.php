@@ -31,8 +31,9 @@
                     picture=?,
                     band=?,
                     album=?,
-                    song=?,
-                    WHERE post_ID=?');
+                    song=?
+                    WHERE post_ID=?'
+                );
                 $query->execute(
                     [
                         $_POST['title'],
@@ -133,7 +134,7 @@
                 </textarea>
                 <br><br>
                 <label>Add tag(s) Need to Start With a '#'</label><br>
-                <input value="<?php foreach ($tags as $tag){ echo $tag.' ';} ?>" class="border border-dark" name='tags' type="text" required/>
+                <input value="<?php foreach ($tags as $tag){echo $tag;} ?>" class="border border-dark" name='tags' type="text" required/>
                 <br><br>
                 <button class="btn btn-warning text-dark" type="submit">Post</button>
             </form>

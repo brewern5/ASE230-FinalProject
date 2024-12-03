@@ -51,14 +51,14 @@ function displayNav($entity=false){
             </ul>
         </div>';
         } 
-    elseif(!isLogged()) {
+    elseif(!isLogged() && !$entity) {
         echo  
             '<div class="text-end">
                 <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
                 <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
             </div>';
     }
-    if(isLogged() && $entity) { 
+    elseif(isLogged() && $entity) { 
         echo
         '<div class="dropdown text-end">
             <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,7 +72,7 @@ function displayNav($entity=false){
             </ul>
         </div>';
         } 
-    elseif(!isLogged()) {
+    elseif(!isLogged() && $entity) {
         echo  
             '<div class="text-end">
                 <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
@@ -112,30 +112,18 @@ function checkFields($x) {
 }
 
 //assisting logging in user
-function checkIfInDB($user, $email, $password=null) {   
+function checkIfInDB($user, $email, $password) {   
 
     print_r($user);
 
-    if(password_verify($password, $user[0]['password'])){
-        return true;
+    if($user == null){
+        return false;
+    }
+    else{
+        return password_verify($password, $user['password']);
     }
     return false;
         
-    /*
-    $fp=fopen('users.csv.php', 'r');
-    while(!feof($fp)){
-        $line=fgets($fp);
-        $line=explode(';',$line);
-            //must trim the end because there is a newline character
-        if(count($line)==3 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-            fclose($fp);
-            if(!isset($password)) { return true; }
-            return password_verify($password,trim($line[1]));
-        }
-    }
-    fclose($fp);
-    return false;
-    */
 }
 
 //displays most recent DB
