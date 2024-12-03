@@ -43,56 +43,8 @@ function displayElement($element,$x) {
     </head>
     <body>
         
-        <header class="tab">
-
-            <!-- will display user's name if they are logged in -->
-            <?php echo displayHeader(); ?>
-
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                    </a>
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        
-                    <li><a href="../index.php?x=new" class="nav px-2">Home</a></li>
-                    <li><a href="index.php?x=new" class="currentloc nav px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) echo
-                        '<li><a href="myPosts.php?x=ne" class="nav px-2">My Posts</a></li>
-                        <li><a href="create.php" class="nav px-2">Create New Post</a></li>' ?>
-                    </ul>
-
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                    </form>
-
-                    <?php if(isset($_SESSION['email'])) { ?>
-                        
-                    <!--This shows profile information is the user is in a session-->
-                    <div class="dropdown text-end">
-                        <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                        </a>
-                        <ul class="dropdown-menu text-small" style="">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href=" sign-out.php">Sign out</a></li>
-                        </ul>
-                    </div>
-                        
-                    <!--This shows sign in and sign up buttons if the user is not in a session-->
-                    <?php } else { ?>
-                    
-                    <div class="text-end">
-                        <a class="btn button1 me-2" href="sign-in.php" role="button">Login</a>
-                        <a class="btn button2" href="sign-up.php" role="button">Sign Up</a>
-                    </div>
-                    <?php } ?>
-                </div>
-            </div>
-        </header>
+        <!--Displays the nav bar, function is in auth-->
+        <?php echo displayNav(); ?>
 
         <div class="tab">
             <ul class="nav py-3">
