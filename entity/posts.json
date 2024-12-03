@@ -1,24 +1,30 @@
 [
     {
-        "title": "Title 2",
-        "content": "this is the content for title 2",
-        "band": "",
-        "album": "",
-        "song": "",
-        "author": "Nate Brewer",
+        "title": "Void Surfacing",
+        "content": "                    Phenomenal Song                ",
+        "picture": "https:\/\/spaces.rocksound.tv\/uploads\/2022\/11\/inventanimate_2022.jpg",
+        "band": "Invent Animate",
+        "album": "Heavener",
+        "song": "Void Surfacing",
+        "author": "Nathaniel Brewer",
         "time": {
-            "date": "10-08-2024",
-            "timeStamo": "14:00:00"
+            "date": "2024:10:11",
+            "timeStamp": "04:52:49"
         },
         "tags": [
-            "djent"
+            "#djent",
+            "#Metalcore",
+            ""
         ],
-        "likes": 10,
+        "likes": 0,
         "comments": {
-            "user": "Joe Schmoe",
-            "date": "yesterday idiot",
-            "commentContent": "Donde esta la biblioteca",
-            "likes": 9
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
         }
     },
     {
@@ -33,7 +39,9 @@
             "date": "2024:10:08",
             "timeStamp": "18:11:03"
         },
-        "tags": "metal",
+        "tags": [
+            "#metal"
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -46,17 +54,23 @@
         }
     },
     {
-        "title": "title 10",
-        "content": "this is a test",
-        "band": "",
-        "album": "",
-        "song": "",
-        "author": "",
+        "title": "Irreversible review",
+        "content": "                    THis is the greatest song I have ever listened to!!!                ",
+        "picture": "https:\/\/upload.wikimedia.org\/wikipedia\/en\/3\/3f\/Erra_Drift_Album_Cover_Art.jpg",
+        "band": "Erra",
+        "album": "Drift",
+        "song": "Irreversible",
+        "author": "Nathaniel Brewer",
         "time": {
-            "date": "2024:10:08",
-            "timeStamp": "19:45:57"
+            "date": "2024:10:11",
+            "timeStamp": "04:57:01"
         },
-        "tags": "metal",
+        "tags": [
+            "#Djent",
+            "#Industr",
+            "#Metal",
+            ""
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -69,77 +83,23 @@
         }
     },
     {
-        "title": "title 10",
-        "content": "this is a test",
-        "band": "",
-        "album": "",
-        "song": "",
-        "author": "",
-        "time": {
-            "date": "2024:10:08",
-            "timeStamp": "19:53:08"
-        },
-        "tags": "metal",
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        }
-    },
-    {
-        "title": "title 10",
-        "content": "this is a test",
-        "author": "",
-        "time": {
-            "date": "2024:10:08",
-            "timeStamp": "19:55:02"
-        },
-        "tags": "metal",
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        }
-    },
-    {
-        "title": "title29",
-        "content": "this is post 2222",
-        "author": "",
-        "time": {
-            "date": "2024:10:08",
-            "timeStamp": "19:56:15"
-        },
-        "tags": "metal",
-        "likes": 0,
-        "comments": {
-            "numOfComments": 0,
-            "comment": {
-                "user": "",
-                "date": "",
-                "commentContent": "",
-                "likes": 0
-            }
-        }
-    },
-    {
-        "title": "123",
+        "title": "123123123",
         "content": "123",
-        "author": "",
+        "picture": "",
+        "band": "123123123",
+        "album": "123123123",
+        "song": "123123123",
+        "author": "danny\r\n",
         "time": {
-            "date": "2024:10:08",
-            "timeStamp": "19:57:04"
+            "date": "2024:11:26",
+            "timeStamp": "16:30:35"
         },
-        "tags": "metal",
+        "tags": [
+            "#",
+            "#",
+            "#tag",
+            ""
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -152,14 +112,21 @@
         }
     },
     {
-        "title": "obuyhvutc7riu",
-        "content": "hrsyts6idrutrxrts43aatrtrycuihop;lgfdxcvbn",
-        "author": "",
+        "title": "test1",
+        "content": "1",
+        "picture": "",
+        "band": "1",
+        "album": "1",
+        "song": "1",
+        "author": "danny\r\n",
         "time": {
-            "date": "2024:10:10",
-            "timeStamp": "17:12:27"
+            "date": "2024:12:01",
+            "timeStamp": "18:48:50"
         },
-        "tags": "jb iui7yih",
+        "tags": [
+            "#tag",
+            ""
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -172,18 +139,21 @@
         }
     },
     {
-        "title": "NPC Review",
-        "content": "ounbuenirnepoinfnvkjnkjfvnfdd",
-        "picture": "https:\/\/f4.bcbits.com\/img\/a0042190438_65",
-        "band": "Darknet",
-        "album": "The Internet",
-        "song": "NPC",
-        "author": "Danny",
+        "title": "test2",
+        "content": "2",
+        "picture": "",
+        "band": "2",
+        "album": "2",
+        "song": "2",
+        "author": "danny\r\n",
         "time": {
-            "date": "2024:10:10",
-            "timeStamp": "18:35:11"
+            "date": "2024:12:01",
+            "timeStamp": "18:49:07"
         },
-        "tags": "metal",
+        "tags": [
+            "#tag",
+            ""
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -196,14 +166,21 @@
         }
     },
     {
-        "title": "StL Review",
-        "content": "                                        Really Cool Song!                                ",
-        "author": "Danny",
+        "title": "test3",
+        "content": "3",
+        "picture": "",
+        "band": "3",
+        "album": "3",
+        "song": "3",
+        "author": "danny\r\n",
         "time": {
-            "date": "2024:10:10",
-            "timeStamp": "18:45:54"
+            "date": "2024:12:01",
+            "timeStamp": "18:49:24"
         },
-        "tags": "metal",
+        "tags": [
+            "#tag",
+            ""
+        ],
         "likes": 0,
         "comments": {
             "numOfComments": 0,
@@ -213,10 +190,168 @@
                 "commentContent": "",
                 "likes": 0
             }
+        }
+    },
+    {
+        "title": "test4",
+        "content": "4",
+        "picture": "",
+        "band": "4",
+        "album": "4",
+        "song": "4",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:49:34"
         },
-        "picture": "https:\/\/f4.bcbits.com\/img\/a1039294112_10.jpg",
-        "band": "Summoning the Lich",
-        "album": "United in Chaos",
-        "song": "The Nightmare Begins"
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "test5",
+        "content": "5",
+        "picture": "",
+        "band": "5",
+        "album": "5",
+        "song": "5",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:49:45"
+        },
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "test6",
+        "content": "6",
+        "picture": "",
+        "band": "6",
+        "album": "6",
+        "song": "6",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:49:58"
+        },
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "test7",
+        "content": "7",
+        "picture": "",
+        "band": "7",
+        "album": "7",
+        "song": "7",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:50:11"
+        },
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "test8",
+        "content": "8",
+        "picture": "",
+        "band": "8",
+        "album": "8",
+        "song": "8",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:50:22"
+        },
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
+    },
+    {
+        "title": "test9",
+        "content": "9",
+        "picture": "",
+        "band": "9",
+        "album": "9",
+        "song": "9",
+        "author": "danny\r\n",
+        "time": {
+            "date": "2024:12:01",
+            "timeStamp": "18:50:34"
+        },
+        "tags": [
+            "#tag",
+            ""
+        ],
+        "likes": 0,
+        "comments": {
+            "numOfComments": 0,
+            "comment": {
+                "user": "",
+                "date": "",
+                "commentContent": "",
+                "likes": 0
+            }
+        }
     }
 ]

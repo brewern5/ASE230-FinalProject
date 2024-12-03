@@ -12,19 +12,19 @@ $blogdata=json_decode($contents,true);
 function displayElement($element,$x) {
    
 
-    echo    '<div class="container">';
-    echo        '<div class="row">';
-    echo            '<div class="col-10">';
-    echo                '<h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>';
-    echo            '</div>';
-    echo            '<div class="col-1">';
-    echo                '<a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>';
-    echo            '</div>';
-    echo            '<div class="col-1">';
-    echo                '<a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>';
-    echo            '</div>';
-    echo        '</div>';
-    echo    '</div>';
+    echo    '<div class="container">
+            <div class="row">
+                <div class="col-10">
+                    <h1><a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a></h1>
+                </div>
+                <div class="col-1">
+                    <a class="btn button1 me-2" href="edit.php?x='.$x.'" role="button">Edit</a>
+                </div>
+                <div class="col-1">
+                    <a class="btn button2" href="delete.php?x='.$x.'" role="button">Delete</a>
+                </div>
+            </div>
+        </div>';
 
 }
 ?>
@@ -32,19 +32,19 @@ function displayElement($element,$x) {
 <html>
     <head>
         <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-        
+        <link rel = "stylesheet" href="../format.css">
+
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
+
     </head>
-    <body class="bg-secondary">
-        
-        <header class="p-3 mb-3 border-bottom bg-dark text-white rounded-bottom">
+    <body>        
+       
+        <header class="tab">
 
             <!-- will display user's name if they are logged in -->
-            <?php if(isset($_SESSION['email'])) echo '<h1> Welcome '.$_SESSION['email'].' to **Insert Site Name Here** </h1>';
-                  else echo '<h1> Welcome to **Insert Site Name Here** </h1>'; 
-            ?>
+            <?php echo displayHeader(); ?>
 
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -54,13 +54,15 @@ function displayElement($element,$x) {
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         
-                        <li><a href="../index.php" class="nav-link px-2">Home</a></li>
-                        <li><a href="index.php?x=new" class="nav-link px-2">Posts</a></li>
-                        <li><a href="myPosts.php?x=new" class="nav-link px-2">My Posts</a></li>
+                        <li><a href="../index.php?x=new" class="nav px-2">Home</a></li>
+                        <li><a href="index.php?x=new" class="nav px-2">Posts</a></li>
+                        <?php if(isset($_SESSION['email'])) echo
+                        '<li><a href="myPosts.php?x=ne" class="currentloc nav px-2">My Posts</a></li>
+                        <li><a href="create.php" class="nav px-2">Create New Post</a></li>' ?>
                     </ul>
 
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                        <input type="search" class="textBox form-control" placeholder="Search..." aria-label="Search">
                     </form>
 
                     <?php if(isset($_SESSION['email'])) { ?>
@@ -71,23 +73,20 @@ function displayElement($element,$x) {
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small" style="">
-                           <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../sign-out.php">Sign out</a></li>
+                            <li><a class="dropdown-item" href=" sign-out.php">Sign out</a></li>
                         </ul>
                     </div>
                         
                     <!--This shows sign in and sign up buttons if the user is not in a session-->
                     <?php } else { ?>
-                       
+                        
                     <div class="text-end">
-                        <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
-                        <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
+                        <a class="btn button1 me-2" href="sign-in.php" role="button">Login</a>
+                        <a class="btn button2" href="sign-up.php" role="button">Sign Up</a>
                     </div>
-                        
-                        
-                        
                     <?php } ?>
                 </div>
             </div>
@@ -95,11 +94,11 @@ function displayElement($element,$x) {
 
         <?php if(isLogged()) { ?>
 
-        <div class="border border-bottom-0 rounded-top bg-dark mx-5 text-white">
-            <a class="btn btn-info m-2" href="create.php" role="button">create new post</a>
+        <div class="top mx-5">
+            <a class="btn button1 m-2" href="create.php" role="button">create new post</a>
         </div>
 
-        <div class="border border-top-0 rounded-bottom bg-dark mx-5 jumbotron text-center text-white">
+        <div class="bottom mx-5 text-center">
 
             <!--prints most recent for the specific user-->
             <?php 
@@ -125,13 +124,13 @@ function displayElement($element,$x) {
 
     </body>
 
-    <div class="container bg-secondary">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
                 </a>
-                <span class="mb-3 mb-md-0 text-white">© 2024 Nate Brewer & Danny Poff</span>
+                <span class="mb-3 mb-md-0">© 2024 Nate Brewer & Danny Poff</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
