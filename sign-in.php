@@ -7,33 +7,23 @@ if(count($_POST)>0){
 
     //completness
     $error = checkFields(0);
-    $isEmail = false;
 
     if(strlen($error)==0){
-        checkIfInDB('users.csv.php',$_POST['email'],$_POST['password']);
-        $fp=fopen('users.csv.php', 'r');
-        while(!feof($fp)){
-            $line=fgets($fp);
-            $line=explode(';',$line);
-            //checks if you have a registered email
-            if(count($line)==3 && $_POST['email']==$line[0])
-                $isEmail = true;
-        
-            //must trim the end because there is a newline character
-            if(count($line)==3 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-                fclose($fp);
-                $_SESSION['email'] = $line[0];
-                $_SESSION['name'] = $line[2];
-                header('location: index.php?x=new');
-                die();
-            }
+
+        require_once('db.php');
+        $query=$db->prepare('SELECT * FROM users WHERE email=?');
+
+        $query->execute([$_POST['email']]);
+        $user = $query->fetch();
+
+        if (checkIfInDB($user, $_POST['email'],$_POST['password'])){
+            $_SESSION['id'] = $user['user_ID'];
+            $_SESSION['name'] = $user['firstname'];
+            header('location: index.php?x=new');
+            die();
         }
-        fclose($fp);
-        if($isEmail) {
-            $error='Your password is wrong';
-        }
-        else {
-            $error='This email is not in our system';
+        else{
+            $error = 'Your Email or Password is wrong!';
         }
     }
 }

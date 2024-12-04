@@ -5,9 +5,6 @@
     //the user will have fourth input fields, three of which are required. These three being:
     // 'Title', 'content', and at least one tag.
     //the third field will be an optional single image upload(for now).
-
-    //will need to create a new field in posts.json.php with all the include attributes
-      
     if(strlen(isLogged())>0){
         $error='';
 
@@ -15,58 +12,48 @@
 
             $error = checkPostFields();
 
-            $json = file_get_contents('posts.json');
-            $tempArray = json_decode($json, true);
+            require_once('../db.php');
+            require_once('../dbfunctions.php');
 
-            $jsonArray = 
-            [
-                'title' => '',
-                'content' => '',
-                "picture" => '',
-                "band" => '',
-                "album" => '',
-                "song" => '',
-                'author' => '',
-                'time' => [
-                    'date' => '',
-                    'timeStamp' => ''
-                ],
-                'tags'=> [
-                    0 => ''
-                ],
-                'likes' => 0,
-                'comments'=> [
-                    'numOfComments' => 0,
-                    'comment' => [
-                        'user'=> '',
-                        'date' => '',
-                        'commentContent' => '',
-                        'likes' => 0
-                    ]
-                ]
-            ];
+            //posts DB
+            $query=$db->prepare(
+                'INSERT INTO posts(                
+                    user_ID,
+                    title,
+                    content,
+                    picture,
+                    band,
+                    album,
+                    song) 
+                    VALUES(?,?,?,?,?,?,?)');
 
             $error = checkTags($_POST['tags']);
+            //if the inputs are correct then the DB wil be updated
             if(strlen($error) == 0){
 
-                $jsonArray['title'] = $_POST['title'];
-                $jsonArray['content'] = $_POST['content'];
-                $jsonArray['picture'] = $_POST['picture'];    
-                $jsonArray['band'] = $_POST['band'];                
-                $jsonArray['album'] = $_POST['album'];
-                $jsonArray['song'] = $_POST['song'];
-                $jsonArray['author'] = $_SESSION['name'];
-                $jsonArray['tags'] = postTags($_POST['tags']);
-                    
+                $query->execute(
+                    [
+                        $_SESSION['id'],
+                        $_POST['title'],
+                        $_POST['content'],
+                        $_POST['picture'],
+                        $_POST['band'],
+                        $_POST['album'],
+                        $_POST['song'],
+                    ]
+                );
 
-                $jsonArray['time']['date'] = date("Y:m:d");
-                $jsonArray['time']['timeStamp'] = date("H:i:s");
+                $post_id = getPostID($db, $_POST['title']); 
 
-                array_push($tempArray, $jsonArray);
+                require_once('post_functions.php'); 
 
-                $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
+                $tagArray = postTags($_POST['tags']);
 
-                file_put_contents('posts.json', $jsonData);
+                foreach($tagArray as $tag){
+                    $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');
+                    $query->execute([$post_id, checkTagDB($db, $tag)]);
+                }
+
             header("location: myPosts.php?x=new");
             die();
             }
@@ -88,7 +75,8 @@
 
         <!--Displays the nav bar, function is in auth-->
         <?php echo displayNav(); ?>
-        
+      
+  <<<<<<< Poffd2      
         <div class="tab mx-5 text-center">
             <h1 class="pt-2">Create Post</h1>
             <?php

@@ -3,30 +3,31 @@
 //this page will post the top "review" for each genre that anyone can view
 require_once('auth.php');
 
-//opens json to print post info
-$contents=file_get_contents("entity\posts.json");
-$blogdata=json_decode($contents,true);
-
 //variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
 $sortOrder='newest';
 $filter='none';
 
+function displayElement($db, $posts) {
 
-function displayElement($element,$x) {
-   
-    echo 
-    '<div class="cotainer">
-        <div class="row">
-            <h1 class="col-sm-5 width-20%">
-                    <a href="entity/detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
-            </h1>
-            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
-            <h5 class="col-sm-4 width-20%">
-                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
-            </h5>
+    foreach($posts as $post){
+
+        $tags = getTagsByPostID($db, $post['post_ID']);
+        $user_id = getUserID($db, $post['post_ID']);
+
+        echo 
+        '<div class="cotainer">
+            <div class="row">
+                <h1 class="col-sm-5 width-20%">
+                        <a href="entity/detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
+                </h1>
+                <p class = col-sm-2>'; foreach($tags as $tag) {echo $tag." ";} echo '</p>
+                <h5 class="col-sm-4 width-20%">
+                    <a href="" class="text-decoration-none">By: '.$user_id.'</a>
+                </h5>
+            </div>
         </div>
-    </div>
-    ';  
+        ';  
+    }
 }
 ?>
 
@@ -63,8 +64,11 @@ function displayElement($element,$x) {
         <br>
 
         <div class="tab text-center">
-            <!--prints most recent-->
-            <?php for($x=9;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
+
+            <?php 
+            require_once('db.php');
+            displayElement($db, displayRecent($db));
+            ?>
         </div>
     </body>
 

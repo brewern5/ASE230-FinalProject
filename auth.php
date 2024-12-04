@@ -2,16 +2,18 @@
 session_start();
 
 require_once('dbfunctions.php');
+require_once('db.php');
 
 function isLogged() {
-    if(isset($_SESSION['email'])){
-        return $_SESSION['email'];
+    if(isset($_SESSION['id'])){
+        return $_SESSION['id'];
     }
 }
 
+//if the user is logged it will display a welcome to the user
 function displayHeader(){
-    $header='<h1> Welcome to The Metal Detector </h1>';
-    if(isset($_SESSION['email'])){
+    $header='';
+    if(isLogged()){
         $header = '<h1> Welcome '.$_SESSION['name'].' to The Metal Detector </h1>';
     }  
     else {
@@ -98,7 +100,68 @@ function displayNav(){ ?>
         <?php 
 }
 
+//if the user is logged tbe create post and myposts pages will be able to be navigated to
+function displayLoggedPost($entity=false){
+    if(isLogged() && !$entity){ 
+        echo
+            '<li><a href="entity/myPosts.php?x=ne" class="nav-link px-2">My Posts</a></li>
+            <li><a href="entity/create.php" class="nav-link px-2">Create New Post</a></li>';
+    }
+    elseif(isLogged() && $entity){
+        echo
+            '<li><a href="myPosts.php?x=ne" class="nav-link px-2">My Posts</a></li>
+            <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>';
+    }
+}
 //if user is not logged in - some options will not display
+/*
+function displayNav($entity=false){
+    if(isLogged() && !$entity) { 
+        echo
+        '<div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small" style="">
+               <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href=" sign-out.php">Sign out</a></li>
+            </ul>
+        </div>';
+        } 
+    elseif(!isLogged() && !$entity) {
+        echo  
+            '<div class="text-end">
+                <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
+                <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
+            </div>';
+    }
+    elseif(isLogged() && $entity) { 
+        echo
+        '<div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small" style="">
+               <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href=" ../sign-out.php">Sign out</a></li>
+            </ul>
+        </div>';
+        } 
+    elseif(!isLogged() && $entity) {
+        echo  
+            '<div class="text-end">
+                <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
+                <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
+            </div>';
+    }
+    
+}
+*/
+//will check login fields and authenticate user
 function checkFields($x) {
     $error='';
     
@@ -127,30 +190,29 @@ function checkFields($x) {
     return $error;
 }
 
-function checkIfInDB($email, $password=null) {
+//assisting logging in user
+function checkIfInDB($user, $email, $password) {   
 
-    $user=[];
-    require_once('db.php');
+    print_r($user);
 
-    //$query=$db->prepare('SELECT * users WHERE email=? AND password=?');
-
-    //$query->execute
-
-    $fp=fopen('users.csv.php', 'r');
-    while(!feof($fp)){
-        $line=fgets($fp);
-        $line=explode(';',$line);
-            //must trim the end because there is a newline character
-        if(count($line)==3 && $_POST['email']==$line[0] && password_verify($_POST['password'],trim($line[1]))){
-            fclose($fp);
-            if(!isset($password)) { return true; }
-            return password_verify($password,trim($line[1]));
-        }
+    if($user == null){
+        return false;
     }
-    fclose($fp);
+    else{
+        return password_verify($password, $user['password']);
+    }
     return false;
+        
 }
 
-function addUser() {
-    
+//displays most recent DB
+function displayRecent($db){
+
+    $query=$db->prepare('SELECT * FROM posts ORDER BY timestamp DESC LIMIT 10');
+    $query->execute([]);
+    $posts=$query->fetchAll();
+    return $posts;
+
 }
+
+?>

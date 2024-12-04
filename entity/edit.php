@@ -3,79 +3,62 @@
     require_once('auth.php');
 
     if(strlen(isLogged())>0){
+        $error='';
 
-        //opening json to print current elements
-        $contents=file_get_contents("posts.json");
-        $blogdata=json_decode($contents,true);
+        require_once('../db.php');
 
         $post_id=$_GET['x'];
-      
-        $error = checkPostFields();
+
+        //displays current post info
+        $query=$db->prepare('SELECT * from posts WHERE post_ID=?');
+        $query->execute([$post_id]);
+        $post=$query->fetch();
+
+        //displays tags already associated with the post
+        $tags=getTagsByPostID($db, $post_id);
 
         if(count($_POST)>0){
-            $tempArray=[];
+            $error = checkPostFields();
 
-            $jsonArray = 
-            [
-                'title' => '',
-                'content' => '',
-                'picture' => '',
-                'band' => '',
-                'album' => '',
-                'song' => '',
-                'author' => '',
-                'time' => [
-                    'date' => getDateStamp(),
-                    'timeStamp' => getTimeStamp()
-                ],
-                'tags'=> [],
-                'likes' => 0,
-                'comments'=> [
-                    'numOfComments' => 0,
-                    'comment' => [
-                        'user'=> '',
-                        'date' => '',
-                        'commentContent' => '',
-                        'likes' => 0
-                    ]
-                ]
-            ];
+            //will check the new tags if they are able to be added
             $error = checkTags($_POST['tags']);
             if(strlen($error) == 0){
-                $jsonArray['title'] = $_POST['title'];
-                $jsonArray['content'] = $_POST['content'];
-                $jsonArray['picture'] = $_POST['picture'];    
-                $jsonArray['band'] = $_POST['band'];                
-                $jsonArray['album'] = $_POST['album'];
-                $jsonArray['song'] = $_POST['song'];
-                $jsonArray['author'] = $_SESSION['name'];
-                $jsonArray['tags'] = postTags($_POST['tags']);
+                
+                $query=$db->prepare(
+                    'UPDATE posts set 
+                    title=?,
+                    content=?,
+                    picture=?,
+                    band=?,
+                    album=?,
+                    song=?
+                    WHERE post_ID=?'
+                );
+                $query->execute(
+                    [
+                        $_POST['title'],
+                        $_POST['content'],
+                        $_POST['picture'],
+                        $_POST['band'],
+                        $_POST['album'],
+                        $_POST['song'],
+                        $post_id
+                    ]
+                );
 
+                $post_id = getPostID($db, $_POST['title']); 
 
-                for($i=0;$i<count($blogdata);$i++) {
-                    if($i != $post_id)
-                        array_push($tempArray, $blogdata[$i]);
-                    else
-                        array_push($tempArray, $jsonArray);
+                $tagArray = postTags($_POST['tags']);
+
+                foreach($tagArray as $tag){
+                    $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');
+                    $query->execute([$post_id, checkTagDB($db, $tag)]);
                 }
 
-                $jsonData = json_encode($tempArray, JSON_PRETTY_PRINT);
-
-                file_put_contents('posts.json', $jsonData);
                 header('location: detail.php?x='.$_GET['x']);
                 die();
             }
         }
-    
-    function findFile($id) {
-        //finds the index
-        for($i=0;$i<count($blogdata);$i++) {
-            if($blogdata[$i]['id'] == $id) {
-                return $i;
-            }
-        }
-    }
-
 ?>
 
 <html>
@@ -103,34 +86,36 @@
             <form method="POST">
                 <div class="container">
                     <div class="row">
-                        <div class="col-5 mx-5">
+                        <div class="col-4"></div>
+                        <div class="col">
                             <label>Title</label><br>
-                            <input value="<?php echo $blogdata[$post_id]['title']; ?>"class="border border-dark" name='title' type="text" required/>
+                            <input value="<?php echo $post['title']; ?>"class="border border-dark" name='title' type="text" required/>
                             <br><br>
                             <label>Band Name</label><br>
-                            <input value="<?php echo $blogdata[$post_id]['band']; ?>"class="border border-dark" name='band' type="text" required/>
+                            <input value="<?php echo $post['band']; ?>"class="border border-dark" name='band' type="text" required/>
                             <br><br>
                         </div>
-                        <div class="col-5 mx-5">
+                        <div class="col">
                             <label>Album Name</label><br>
-                            <input value="<?php echo $blogdata[$post_id]['album']; ?>" class="border border-dark" name='album' type="text" required/>
+                            <input value="<?php echo $post['album']; ?>" class="border border-dark" name='album' type="text" required/>
                             <br><br>
                             <label>Song Name</label><br>
-                            <input value="<?php echo $blogdata[$post_id]['song']; ?>" class="border border-dark" name='song' type="text" required/>
+                            <input value="<?php echo $post['song']; ?>" class="border border-dark" name='song' type="text" required/>
                             <br><br>
                         </div>
+                        <div class="col-4"></div>
                     </div>
                 </div>
                 <label>Picture address(optional)</label><br>
-                <input value="<?php echo $blogdata[$post_id]['picture']; ?>" Style="width:407px;" class="border border-dark" name='picture' type="text" />
+                <input value="<?php echo $post['picture']; ?>" Style="width:407px;" class="border border-dark" name='picture' type="text" />
                 <br><br>
                 <label>Write your post</label><br>
                 <textarea style="width:800px;height:200px" class="border border-dark" name='content' type="text" required>
-                    <?php echo $blogdata[$post_id]['content']; ?>
+                    <?php echo $post['content']; ?>
                 </textarea>
                 <br><br>
-                <label>Add tag(s)</label><br>
-                <input value="<?php foreach ($blogdata[$post_id]['tags'] as $tag){ echo $tag.' ';} ?>" class="border border-dark" name='tags' type="text" required/>
+                <label>Add tag(s) Need to Start With a '#'</label><br>
+                <input value="<?php foreach ($tags as $tag){echo $tag;} ?>" class="border border-dark" name='tags' type="text" required/>
                 <br><br>
                 <button class="btn button2" type="submit">Post</button>
             </form>
@@ -158,5 +143,6 @@
     }
     else{
         header("location: index.php");
+        die();
     }  
 ?>

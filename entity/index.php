@@ -4,31 +4,32 @@
 
 require_once('auth.php');
 
-//opens json to print post info
-$contents=file_get_contents("posts.json");
-$blogdata=json_decode($contents,true);
-
-
 //variable that keeps track of the sort order: newest, popular, and maybe their reverse. filter will filter by genre.
 $sortOrder='newest';
 $filter='none';
 
-function displayElement($element,$x) {
-   
-    echo 
-    '<div class="cotainer">
-        <div class="row">
-            <h1 class="col-sm-5 width-20%">
-                    <a href="detail.php?x='.$x.'" class="text-decoration-none">'.$element["title"].'</a>
-            </h1>
-            <p class = col-sm-2>'; foreach ($element["tags"] as $tag) {echo $tag." ";} echo '</p>
-            <h5 class="col-sm-4 width-20%">
-                <a href="" class="text-decoration-none">By: '.$element["author"].'</a>
-            </h5>
-        </div>
-    </div>
-    ';  
 
+function displayElement($db, $posts) {
+
+    foreach($posts as $post){
+
+        $tags = getTagsByPostID($db, $post['post_ID']);
+        $user_id = getUserID($db, $post['post_ID']);
+
+        echo 
+        '<div class="cotainer">
+            <div class="row">
+                <h1 class="col-sm-5 width-20%">
+                        <a href="detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
+                </h1>
+                <p class = col-sm-2>'; foreach($tags as $tag) {echo $tag." ";} echo '</p>
+                <h5 class="col-sm-4 width-20%">
+                    <a href="" class="text-decoration-none">By: '.$user_id.'</a>
+                </h5>
+            </div>
+        </div>
+        ';  
+    }
 }
 ?>
 
@@ -74,6 +75,14 @@ function displayElement($element,$x) {
             <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
         </div>
         <?php } ?>
+        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
+ 
+            <?php 
+            require_once('../db.php');
+            displayElement($db, displayRecent($db), true);
+            ?>
+        </div>
+
     </body>
 
     <div class="container">
