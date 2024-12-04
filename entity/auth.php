@@ -15,15 +15,14 @@
             return'   <div class="container">
                         <div class="row">
                             <div class="col-sm-7">
-                                <a class="btn btn-info me-2" href="edit.php?x='.$x.'" role="button">Edit</a>
+                                <a class="btn button1 me-2" href="edit.php?x='.$x.'" role="button">Edit</a>
                             </div>
                             <div class="col-sm-4">
-                                <a class="btn btn-danger" href="delete.php?x='.$x.'" role="button">Delete</a>
+                                <a class="btn button2" href="delete.php?x='.$x.'" role="button">Delete</a>
                             </div>
                         </div>
                     </div>';
         }
     }
-    function checkTags($tags){
 
 ?>

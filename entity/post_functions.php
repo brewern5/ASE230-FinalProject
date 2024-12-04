@@ -135,7 +135,7 @@ function displayComments($db, $post_ID, $viewAll=false){
         for($i = 0; $displayAmount > $i; $i++){
             
             echo'
-            <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
+            <div class="tab mx-5 p-2">
                 <div class="container">
                     <div class="row">
                         <div class="col-1">
@@ -148,7 +148,7 @@ function displayComments($db, $post_ID, $viewAll=false){
                             <p>'.$comments[$i]['content'].'</p>
                         </div>
                         <div class="col-1">
-                            <button type="button" name="like">Like</button> 
+                            <button type="button" class="btn button1" name="like">Like</button> 
                             <p>'.$comments[$i]['likes'].'</p>
                         </div>
                     </div>
@@ -173,12 +173,12 @@ function displayPostLikebutton($db, $post_ID, $likes){
     $liked = checkPostLikeStatus($db, $post_ID);
     if(!$liked){
         return'
-        <button type="button" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
+        <button type="button" class="btn notLike" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
         ';
     }
     else if($liked){
         return'
-        <button type="button" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
+        <button type="button" class="btn button1" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
         ';
     }
 }

@@ -8,7 +8,6 @@ require_once('auth.php');
 $sortOrder='newest';
 $filter='none';
 
-
 function displayElement($db, $posts) {
 
     foreach($posts as $post){
@@ -27,8 +26,7 @@ function displayElement($db, $posts) {
                     <a href="" class="text-decoration-none">By: '.$user_id.'</a>
                 </h5>
             </div>
-        </div>
-        ';  
+        </div>';  
     }
 }
 ?>
@@ -62,21 +60,7 @@ function displayElement($db, $posts) {
 
             </ul>
         </div>
-
-
-        <?php if($_GET['x']=='new') { ?>
-        <div class="tab mx-5 jumbotron text-center">
-            <!--prints most recent-->
-            <?php for($x=count($blogdata)-1;$x>=0;$x--) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } else {?>
-        <div class="tab mx-5 text-center">
-            <!--prints reverse will print most popular-->
-            <?php for($x=0;$x<count($blogdata);$x++) displayElement($blogdata[$x],$x); ?>
-        </div>
-        <?php } ?>
-        <div class="border rounded bg-dark mx-5 jumbotron text-center text-white">
- 
+        <div class="tab text-center">
             <?php 
             require_once('../db.php');
             displayElement($db, displayRecent($db), true);
