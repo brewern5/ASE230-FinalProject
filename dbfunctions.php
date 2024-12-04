@@ -129,5 +129,4 @@ function createComment($db, $post_ID, $comment){
 
 }
 
-
 ?>

@@ -2,19 +2,11 @@
 
 //this page will post the top "review" for each genre that anyone can view
 
+require_once('../auth.php');
 require_once('auth.php');
 
-if(isLogged()){
-
-    //opens json to print post info
-    //$contents=file_get_contents("posts.json");
-    //$blogdata=json_decode($contents,true);
-
-
-    function displayElement($element, $post_id) {
-    
-
-        echo    '<div class="container">
+ function displayElement($element, $post_id) {
+          echo    '<div class="container">
                     <div class="row">
                         <div class="col-10">
                             <h1><a href="detail.php?x='.$element[$post_id]['post_ID'].'" class="text-decoration-none">'.$element[$post_id]['title'].'</a></h1>
@@ -30,6 +22,33 @@ if(isLogged()){
 
     }
     ?>
+
+<html>
+    <head>
+        <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel = "stylesheet" href="../format.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
+    </head>
+    <body>        
+       
+        <header class="tab">
+
+            <!-- will display user's name if they are logged in -->
+            <?php echo displayNav(); ?>
+
+<!---if(isLogged()){ } --->
+
+        <?php if(isLogged()) { ?>
+
+        <div class="top mx-5">
+            <a class="btn button1 m-2" href="create.php" role="button">create new post</a>
+        </div>
+
+        <div class="bottom mx-5 text-center">
 
     <html>
         <head>

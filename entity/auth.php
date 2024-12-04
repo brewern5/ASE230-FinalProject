@@ -24,5 +24,6 @@
                     </div>';
         }
     }
+    function checkTags($tags){
 
 ?>
