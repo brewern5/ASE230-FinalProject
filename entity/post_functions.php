@@ -135,21 +135,20 @@ function displayComments($db, $post_ID, $viewAll=false){
         for($i = 0; $displayAmount > $i; $i++){
             
             echo'
-            <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
+            <div class="tab mx-5 p-2">
                 <div class="container">
                     <div class="row">
                         <div class="col-1">
                             <img src="https://placehold.co/40x40">
                         </div>
                         <div class="col-2"> 
-                            <p>UserName<p>
+                            <p>'.$comments[$i]['username'].'<p>
                         </div>
                         <div class="col-8">
                             <p>'.$comments[$i]['content'].'</p>
                         </div>
-                        <div class="col-1">
-                            <button type="button" name="like">Like</button> 
-                            <p>'.$comments[$i]['likes'].'</p>
+                        <div id="commentLikeDiv_Comment'.$comments[$i]['comment_ID'].'" class="col-1">
+                            '.displayCommentLikeButton($db, $comments[$i]['comment_ID'], $post_ID, $comments[$i]['likes']).'
                         </div>
                     </div>
                 </div>
@@ -169,33 +168,43 @@ function displayComments($db, $post_ID, $viewAll=false){
 
 }
 
-function displayPostLikebutton($db, $post_ID, $likes){
+function displayPostLikeButton($db, $post_ID, $likes){
+
     $liked = checkPostLikeStatus($db, $post_ID);
+
     if(!$liked){
-        return'
-        <button type="button" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
-        ';
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn notLike" id="postLike" name="postLike" onclick="changeLikeStatusPost(true);">Like</button>
+        </form>';
     }
     else if($liked){
-        return'
-        <button type="button" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
-        ';
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn button1" id="postDislike" name="postDislike" onclick="changeLikeStatusPost(false);">Unlike</button>
+        </form>';
     }
+    return '
+        <div class="col-4 text-left">
+             <p> Likes : '.$likes.' </p>
+        </div>'
+        .$like;
 }
-
-function displayCommentLikebutton($db, $comment_ID){
+function displayCommentLikebutton($db, $comment_ID, $post_ID, $likes){
     $liked = checkCommentLikeStatus($db, $comment_ID);
     if(!$liked){
-        echo'
-        <button type="button" name="likebutton" onclick="'.likeComment($db, $post_ID).'">Like</button>
-        ';
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn notLike" id="commentLike" name="commentLike" onclick="changeLikeStatusComment(true, '.$comment_ID.')">Like</button>
+        </form>';
     }
     else if($liked){
-        echo'
-        <button type="button" name="likebutton" onclick="'.dislikeComment($db, $post_ID).'">Like</button>
-        ';
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn button1" id="commentDislike" name="commentDislike" onclick="changeLikeStatusComment(false, '.$comment_ID.')">Unlike</button>
+        </form>';
     }
+    return 
+        $like.' 
+        <p>'.$likes.'</p>';
 }
-
-
-?>
