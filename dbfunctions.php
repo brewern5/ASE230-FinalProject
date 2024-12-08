@@ -79,20 +79,6 @@ function checkPostLikeStatus($db, $post_ID){
     }
     return false;
 }
-function likePost($db, $post_ID, $likes){
-    $query=$db->prepare('UPDATE posts set likes=? WHERE post_ID=?');
-    $query->execute([$likes+1, $post_ID]);
-
-    $query=$db->prepare('INSERT INTO post_likes(post_ID, user_ID) VALUES(?, ?)');
-    $query->execute([$post_ID, $_SESSION['id']]);
-}
-function dislikePost($db, $post_ID, $likes){
-    $query=$db->prepare('UPDATE posts set likes=? WHERE post_ID=?');
-    $query->execute([$likes-1, $post_ID]);
-
-    $query=$db->prepare('DELETE FROM post_likes WHERE post_ID=? AND user_ID=?');
-    $query->execute([$post_ID, $_SESSION['id']]);
-}
 
 function checkCommentLikeStatus($db, $comment_ID){
     if(strlen(isLogged())>0){
@@ -107,26 +93,11 @@ function checkCommentLikeStatus($db, $comment_ID){
     }
     return false;
 }
-function likeComment($db, $comment_ID, $likes){
-    $query=$db->prepare('UPDATE comments SET likes=? WHERE comment_ID=?');
-    $query->execute([$likes+1, $comment_ID]);
 
-    $query=$db->prepare('INSERT INTO comment_likes(comment_ID, user_ID) VALUES(?, ?)');
-    $query->execute([$comment_ID, $_SESSION['id']]);
-}
-function dislikeComment($db, $comment_ID, $likes){
-    $query=$db->prepare('UPDATE comments SET likes=? WHERE comment_ID=?');
-    $query->execute([$likes-1]);
-
-    $query=$db->prepare('DELETE * FROM comment_likes WHERE comment_ID=? AND user_ID=?');
-    $query->execute([$comment_ID, $_SESSION['id']]);
-}
 
 function createComment($db, $post_ID, $comment){
-    $query=$db->prepare('INSERT INTO comments(post_ID, user_ID, content) VALUES(?, ?, ?)');
-    $query->execute([$post_ID, $_SESSION['id'], $comment]);
-
-
+    $query=$db->prepare('INSERT INTO comments(post_ID, username, user_ID, content) VALUES(?, ?, ?, ?)');
+    $query->execute([$post_ID, $_SESSION['name'], $_SESSION['id'], $comment]);
 }
 
 ?>

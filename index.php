@@ -15,7 +15,9 @@ function displayElement($db, $posts) {
         $user_id = getUserID($db, $post['post_ID']);
 
         echo 
-        '<div class="cotainer">
+        '
+        <hr>
+        <div class="cotainer">
             <div class="row">
                 <h1 class="col-sm-5 width-20%">
                         <a href="entity/detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
@@ -26,6 +28,7 @@ function displayElement($db, $posts) {
                 </h5>
             </div>
         </div>
+        <hr>
         ';  
     }
 }
