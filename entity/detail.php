@@ -19,6 +19,7 @@ function displayElement($db, $post_id) {
 
     echo '
         <div id="'.$post_id.'"class="tab mx-5 p-2">
+
             <div class="row">
                 <div class="col-5">
                     '.$pic.'

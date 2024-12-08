@@ -149,6 +149,7 @@ function displayComments($db, $post_ID, $viewAll=false){
                         </div>
                         <div id="commentLikeDiv_Comment'.$comments[$i]['comment_ID'].'" class="col-1">
                             '.displayCommentLikeButton($db, $comments[$i]['comment_ID'], $post_ID, $comments[$i]['likes']).'
+
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 
     //db.php
     $host='localhost';
-    $dbname='metal_detector';
+    $dbname='test';
     $user = 'root';
     $pass='';
 
