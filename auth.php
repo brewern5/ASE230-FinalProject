@@ -23,12 +23,11 @@ function displayHeader(){
 }
 
 function ifPage($pageName, $level) {
-    $main="/ASE230/ASE230-FinalProject-poffd2/";
-    $entity="/ASE230/ASE230-FinalProject-poffd2/entity/";
-    if($_SERVER['SCRIPT_NAME'] == $main.$pageName && $level == 1) {
+    $address=explode('/',$_SERVER['SCRIPT_NAME']);
+    if($level == "1" && $pageName == $address['3']) {
         echo "currentloc";
     }
-    if($_SERVER['SCRIPT_NAME'] == $entity.$pageName && $level == 2) {
+    else if($level == "2" && $pageName == $address['4']) {
         echo "currentloc";
     }
 }
@@ -60,7 +59,7 @@ function displayNav(){ ?>
                         <!--Nav bar buttons-->
                         <li><a href="<?php ifEntity("1"); ?>index.php?x=new" class="<?php ifPage("index.php", "1") ?> nav px-2">Home</a></li>
                         <li><a href="<?php ifEntity("2"); ?>index.php?x=new" class="<?php ifPage("index.php", "2") ?> nav px-2">Posts</a></li>
-                        <?php if(isset($_SESSION['email'])) { ?>
+                        <?php if(isLogged()) { ?>
                             <li><a href="<?php ifEntity("2"); ?>myPosts.php?x=new" class="<?php ifPage("myPosts.php", "2") ?> nav px-2">My Posts</a></li>
                             <li><a href="<?php ifEntity("2"); ?>create.php" class="<?php ifPage("create.php", "2") ?> nav px-2">Create New Post</a></li>
                         <?php }?>
@@ -71,7 +70,7 @@ function displayNav(){ ?>
                         <input type="search" class="textBox form-control" placeholder="Search..." aria-label="Search">
                     </form>
 
-                    <?php if(isset($_SESSION['email'])) { ?>
+                    <?php if(isLogged()) { ?>
                         
                     <!--This shows profile information is the user is in a session-->
                     <div class="dropdown text-end">

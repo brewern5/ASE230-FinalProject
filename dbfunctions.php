@@ -27,7 +27,7 @@ function getUserPosts($db){
 }
 
 function getPost($db, $post_id){
-    $query=$db->prepare('SELECT * FROM posts WHERE post_id=?');
+    $query=$db->prepare('SELECT * FROM posts WHERE post_ID=?');
     $query->execute([$post_id]);
     $post = $query->fetchAll();
 

@@ -65,6 +65,24 @@ a.currentloc:hover {
     color: var(--black);
 }
 
+.notLike {
+    color: var(--blue);
+    border-radius: 25px;
+    border-bottom: solid;
+    border-width: 2px .5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+}
+
+.notLike:hover {
+    color: var(--silver);
+    border-radius: 25px;
+    border-bottom: solid;
+    border-width: 2px .5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+}
+
 .textBox {
     background-color: #C5C5C5;
 }

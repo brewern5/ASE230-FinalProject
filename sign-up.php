@@ -60,7 +60,7 @@ if(count($_POST)>0){
             <br><br>
             <label>CONFIRM PASSWORD</label>
             <br>
-            <input class="border border-dark textBox" name='confirmPassword' type="password" required>
+            <input class="border border-dark textBox" name='confirm_password' type="password" required>
 
             <br><br>
             <button class="btn button2 me-2" type="submit">SIGN UP</button>
