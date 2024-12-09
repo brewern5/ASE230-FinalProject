@@ -22,7 +22,7 @@ function displayTags($db, $post_id){
         $query=$db->prepare('SELECT * FROM tags WHERE tag_id=?');
         $query->execute([$tag['tag_ID']]);
         $tagName = $query->fetch();
-        $tags.= $tagName['tag_title'].' ';
+        $tags = $tagName['tag_title'].' ';
     }
     return $tags;
 }
@@ -135,7 +135,7 @@ function displayComments($db, $post_ID, $viewAll=false){
         for($i = 0; $displayAmount > $i; $i++){
             
             echo'
-            <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
+            <div class="tab mx-5 p-2">
                 <div class="container">
                     <div class="row">
                         <div class="col-1">
@@ -147,9 +147,15 @@ function displayComments($db, $post_ID, $viewAll=false){
                         <div class="col-8">
                             <p>'.$comments[$i]['content'].'</p>
                         </div>
-                        <div class="col-1">
-                            <button type="button" name="like">Like</button> 
-                            <p>'.$comments[$i]['likes'].'</p>
+                        <div class="col-1">';
+                        if(!isLogged() > 0) {
+                                echo '<button type="button" class="btn button1" name="like">Like</button>';
+                            }
+                            else {
+                                //make this button work
+                                echo '<button type="button" class="btn button1" name="like">Like</button>';
+                            }
+            echo            '<p>'.$comments[$i]['likes'].'</p>
                         </div>
                     </div>
                 </div>
@@ -158,10 +164,10 @@ function displayComments($db, $post_ID, $viewAll=false){
     }
     else{
         echo'
-        <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
+        <div class="tab mx-5 p-2">
             <div class="container">
                 <div class="row">
-                    <h3 class="text-center">There is no comments on this post</h3>
+                    <h3 class="text-center">There are no comments on this post</h3>
                 </div>
             </div>
         </div>';   
@@ -169,17 +175,24 @@ function displayComments($db, $post_ID, $viewAll=false){
 
 }
 
-function displayPostLikebutton($db, $post_ID, $likes){
+//$role = 0;
+
+function displayPostLikebutton($db, $post_ID, $likes) {
     $liked = checkPostLikeStatus($db, $post_ID);
-    if(!$liked){
-        return'
-        <button type="button" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
-        ';
+    if(!isset($_SESSION)) {
+        if(!$liked){
+            return'
+            <button type="button" class="btn notLike" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
+            ';
+        }
+        else if($liked){
+            return'
+            <button type="button" class="btn button1" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
+            ';
+        }
     }
-    else if($liked){
-        return'
-        <button type="button" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
-        ';
+    else {
+        return '<button type="button" class="btn button1" name="likebutton">Like</button>';
     }
 }
 

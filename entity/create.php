@@ -75,8 +75,7 @@
 
         <!--Displays the nav bar, function is in auth-->
         <?php echo displayNav(); ?>
-      
-  <<<<<<< Poffd2      
+           
         <div class="tab mx-5 text-center">
             <h1 class="pt-2">Create Post</h1>
             <?php
@@ -139,5 +138,6 @@
 <?php
     }
     else{
-        location("header: index.php");
+        header("location: index.php");
     }
+?>
