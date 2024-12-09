@@ -10,10 +10,10 @@ $filter='none';
 
 function displayElement($db, $posts) {
 
-    foreach($posts as $post){
+    for($x=count($posts)-1;$x>=0;$x--) {
 
-        $tags = getTagsByPostID($db, $post['post_ID']);
-        $user_id = getUserID($db, $post['post_ID']);
+        $tags = getTagsByPostID($db, $posts[$x]['post_ID']);
+        $user_id = getUserID($db, $posts[$x]['post_ID']);
 
         echo 
         '
@@ -21,13 +21,23 @@ function displayElement($db, $posts) {
             <div class="row">
                 
                 <h1 class="col-sm-5 width-20%">
-                        <a href="detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
+                        <a href="detail.php?x='.$posts[$x]['post_ID'].'" class="text-decoration-none">'.$posts[$x]["title"].'</a>
                 </h1>
                 <p class = col-sm-2>'; foreach($tags as $tag) {echo $tag." ";} echo '</p>
-                <h5 class="col-sm-4 width-20%">
+                <h5 class="col-sm-3 width-20%">
                     <a href="" class="text-decoration-none">By: '.$user_id.'</a>
-                </h5>
-            </div>
+                </h5>';
+                 //admin can edit or delete any post
+                if(isLogged() && $_SESSION['role'] > 0) {
+                    echo '<div class="col-sm-1">
+                            <a class="btn btn-info me-2" href="edit.php?x='.$posts[$x]['post_ID'].'" role="button">Edit</a>
+                        </div>
+                        <div class="col-sm-1">
+                            <a class="btn btn-danger" href="delete.php?x='.$posts[$x]['post_ID'].'" role="button">Delete</a>
+                        </div>';
+                    }
+        echo 
+           '</div>
         </div>';  
     }
 }
@@ -62,7 +72,7 @@ function displayElement($db, $posts) {
 
             </ul>
         </div>
-        <div class="tab text-center">
+        <div class="tab text-center pt-2">
             <?php 
             require_once('../db.php');
             displayElement($db, displayRecent($db), true);
