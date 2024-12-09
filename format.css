@@ -1,0 +1,158 @@
+
+/*
+Colors that are potentially going to be used:
+black for each tab, blue for current location and login button, red for text and such, dark red for background, silver for hover
+
+Black: 010203
+Blue: 197BBD
+Reds:
+-claret: #8B2635
+-coral: #FF8C61
+-pink: #FB6376
+-indian red: #DB5461
+
+Dark red: 2A0402
+Silver: C5C5C5
+*/
+
+:root {
+    --black: #010203;
+    --blue: #197BBD;
+    --red: #8B2635;
+    --darkRed: #2A0402;
+    --silver: #C5C5C5;
+}
+
+
+body {
+    background-color: var(--darkRed);
+    color: var(--red);
+}
+
+a {
+    color: var(--red);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--silver);
+}
+
+a.currentloc {
+    color: var(--blue);
+}
+
+a.currentloc:hover {
+    color: var(--silver);
+}
+
+.button1 {
+    background-color: var(--blue);
+    border-radius: 25px;
+    color: var(--black);
+    
+}
+
+.button1:hover {
+    background-color: var(--black);
+    border-radius: 25px;
+    color: var(--blue);
+}
+
+.button2 {
+    background-color: var(--red);
+    border-radius: 25px;
+    color: var(--black);
+}
+
+.notLike {
+    color: var(--blue);
+    border-radius: 25px;
+    border-bottom: solid;
+    border-width: 2px .5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+}
+
+.notLike:hover {
+    color: var(--silver);
+    border-radius: 25px;
+    border-bottom: solid;
+    border-width: 2px .5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+}
+
+.textBox {
+    background-color: #C5C5C5;
+}
+
+.pic {
+    border-radius: 25px;
+}
+
+a.nav {
+    border-radius: 25px;
+    /*border-left: solid;*/
+    border-bottom: solid;
+    border-width: 2px .5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+}
+
+.tab {
+    color: var(--red);
+}
+
+header.tab {
+    /*box-shadow: 2px 3px 5px var(--red);*/
+    background-color: var(--black);
+    border-radius: 0px 0px 25px 25px;
+    border-bottom: solid;
+    padding: 1%;
+}
+
+div.tab {
+    /*box-shadow: 2px 3px 5px var(--red);*/
+    background-color: var(--black);
+    border-radius: 25px;
+    border-left: solid;
+    border-bottom: solid;
+    border-width: 3px 1px;
+    margin: .5% 1% 0% 1%;
+    padding-left: 1%;
+}
+
+div.top {
+    background-color: var(--black);
+    border-radius: 25px 25px 0px 0px;
+    border-left: solid;
+    border-width: 3px 1px;
+    margin: .5% 1% 0% 1%;
+    padding-left: 1%;
+}
+
+div.bottom {
+    background-color: var(--black);
+    border-radius: 0px 0px 25px 25px;
+    border-left: solid;
+    border-bottom: solid;
+    border-width: 3px 1px;
+    margin: 0% 1% 0% 1%;
+    padding-left: 1%;
+}
+
+div.lower {
+    position: absolute;
+    bottom: 20%;
+    right: 5%;
+}
+
+div.error {
+    color: var(--silver);
+}
+
+footer {
+    border-top: solid;
+    border-color:var(--red);
+}
