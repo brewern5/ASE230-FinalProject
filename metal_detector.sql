@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 04:35 AM
+-- Generation Time: Dec 09, 2024 at 08:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,16 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `ID` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `comments`
 --
 
@@ -41,6 +31,7 @@ CREATE TABLE `comments` (
   `comment_ID` int(10) UNSIGNED NOT NULL,
   `post_ID` int(10) UNSIGNED NOT NULL,
   `user_ID` int(11) NOT NULL,
+  `username` varchar(32) NOT NULL,
   `content` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `likes` int(10) UNSIGNED NOT NULL DEFAULT 0
@@ -50,8 +41,10 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`comment_ID`, `post_ID`, `user_ID`, `content`, `timestamp`, `likes`) VALUES
-(2, 96, 2, 'this is my comment', '2024-12-03 00:25:49', 0);
+INSERT INTO `comments` (`comment_ID`, `post_ID`, `user_ID`, `username`, `content`, `timestamp`, `likes`) VALUES
+(4, 100, 3, 'Joeseph', 'I agree whole heartedly!!!', '2024-12-09 18:43:19', 1),
+(5, 100, 3, 'Joeseph', 'comment 2', '2024-12-09 18:51:09', 1),
+(6, 100, 3, 'Joeseph', 'asdasd', '2024-12-09 18:59:27', 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +57,15 @@ CREATE TABLE `comment_likes` (
   `user_ID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comment_likes`
+--
+
+INSERT INTO `comment_likes` (`comment_ID`, `user_ID`) VALUES
+(4, 3),
+(5, 3),
+(6, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -75,7 +77,7 @@ CREATE TABLE `posts` (
   `user_ID` int(10) UNSIGNED NOT NULL,
   `title` varchar(64) NOT NULL,
   `content` text NOT NULL,
-  `picture` varchar(32) NOT NULL,
+  `picture` varchar(2048) NOT NULL,
   `band` varchar(32) NOT NULL,
   `album` varchar(32) NOT NULL,
   `song` varchar(32) NOT NULL,
@@ -89,10 +91,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_ID`, `user_ID`, `title`, `content`, `picture`, `band`, `album`, `song`, `likes`, `date`, `timestamp`) VALUES
-(8, 1, 'Irreversible Rules', 'This song goes way too hard!', 'https://en.wikipedia.org/wiki/Dr', 'ERRA', 'Drift', 'Irreversible', 0, '0000-00-00', '2024-11-26 19:42:56'),
-(9, 2, 'Living on a Prayer is Cool', '                    This has been a great song with a phenomenal chorus!                ', 'https://m.media-amazon.com/image', 'Bon Jovi', 'Slippery When Wet', 'Living on a Prayer', 0, '0000-00-00', '2024-11-27 22:50:45'),
-(95, 2, 'Erra\'s Self titled is amazing!!!', 'This album is spectacular, I literally have never listened to such a good album before in my life!', '', 'ERRA', 'ERRA', 'Gungrave', 0, '0000-00-00', '2024-12-02 21:25:49'),
-(96, 2, 'Greyview Is goated', 'Woah I am shocked by their guitar and drum work. Love the new singer as well', '', 'Invent, Animate', 'Greyview', 'Hollow Light', 0, '0000-00-00', '2024-12-03 00:28:52');
+(100, 1, 'ERRA Self Titled Goes Insane!!', 'This album is pure gold omg', 'https://upload.wikimedia.org/wikipedia/en/0/01/Erra_Self-Titled_cover.jpg', 'ERRA', 'ERRA', 'ERRA - Self Titled', 2, '0000-00-00', '2024-12-09 19:04:05');
 
 -- --------------------------------------------------------
 
@@ -104,6 +103,14 @@ CREATE TABLE `post_likes` (
   `post_ID` int(10) UNSIGNED NOT NULL,
   `user_ID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_likes`
+--
+
+INSERT INTO `post_likes` (`post_ID`, `user_ID`) VALUES
+(100, 1),
+(100, 3);
 
 -- --------------------------------------------------------
 
@@ -121,50 +128,9 @@ CREATE TABLE `post_tag` (
 --
 
 INSERT INTO `post_tag` (`post_ID`, `tag_ID`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(6, 2),
-(6, 3),
-(8, 3),
-(8, 4),
-(8, 5),
-(9, 3),
-(9, 6),
-(9, 7),
-(9, 8),
-(10, 0),
-(10, 9),
-(10, 10),
-(11, 0),
-(11, 9),
-(11, 10),
-(12, 0),
-(12, 9),
-(12, 10),
-(13, 0),
-(13, 1),
-(13, 9),
-(13, 10),
-(13, 11),
-(15, 0),
-(15, 9),
-(15, 11),
-(21, 9),
-(21, 12),
-(21, 13),
-(52, 12),
-(52, 13),
-(53, 12),
-(53, 13),
-(53, 14),
-(95, 4),
-(95, 15),
-(95, 16),
-(96, 17),
-(96, 18),
-(96, 19),
-(96, 20);
+(100, 4),
+(100, 16),
+(100, 21);
 
 -- --------------------------------------------------------
 
@@ -182,6 +148,10 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`tag_ID`, `tag_title`) VALUES
+(37, '# yo'),
+(27, '#1'),
+(22, '#123'),
+(24, '#1234'),
 (6, '#bonJovi'),
 (5, '#Drift'),
 (14, '#dumb'),
@@ -191,8 +161,19 @@ INSERT INTO `tags` (`tag_ID`, `tag_title`) VALUES
 (20, '#IAForever'),
 (17, '#InventAnimate '),
 (2, '#post'),
+(39, '#se'),
+(36, '#sel'),
+(34, '#self'),
+(21, '#selft'),
+(38, '#selftitl'),
+(35, '#selftitle'),
 (16, '#selftitled'),
-(1, '#tag');
+(1, '#tag'),
+(29, '#yo'),
+(30, '#yoy'),
+(32, '#yoyo'),
+(31, '#yoyoy'),
+(33, '#yoyoyo');
 
 -- --------------------------------------------------------
 
@@ -214,48 +195,48 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`) VALUES
 (1, 'bobjones123445@gmail.com', '$2y$10$qpFs7UDK8tslTcZNusv2j.c2od9Rcrapsd.1g3KsA9WE0iR7JyLXy', 'Nate', 'Brewer'),
-(2, 'joe@mama.com', '$2y$10$t.mZqHzvMxYvWZGZu8Oz/u2PiQx56UanHFoT1qwOo8GwD4qgln13m', 'joe', 'mama');
+(2, 'joe@mama.com', '$2y$10$t.mZqHzvMxYvWZGZu8Oz/u2PiQx56UanHFoT1qwOo8GwD4qgln13m', 'joe', 'mama'),
+(3, 'joe@schmoe.com', '$2y$10$soqNuNu3pH87FYUYNwB0K.BgBC37aY50oDoauhTDffeiN2eRNBnsu', 'Joeseph', 'Schmoseph');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`comment_ID`,`post_ID`);
+  ADD PRIMARY KEY (`comment_ID`,`post_ID`),
+  ADD KEY `post_ID` (`post_ID`);
 
 --
 -- Indexes for table `comment_likes`
 --
 ALTER TABLE `comment_likes`
-  ADD PRIMARY KEY (`comment_ID`,`user_ID`);
+  ADD PRIMARY KEY (`comment_ID`,`user_ID`),
+  ADD KEY `user_ID` (`user_ID`);
 
 --
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_ID`),
-  ADD UNIQUE KEY `post_ID` (`post_ID`,`user_ID`);
+  ADD UNIQUE KEY `post_ID` (`post_ID`,`user_ID`),
+  ADD KEY `user_ID` (`user_ID`);
 
 --
 -- Indexes for table `post_likes`
 --
 ALTER TABLE `post_likes`
-  ADD PRIMARY KEY (`post_ID`,`user_ID`);
+  ADD PRIMARY KEY (`post_ID`,`user_ID`),
+  ADD KEY `user_ID` (`user_ID`);
 
 --
 -- Indexes for table `post_tag`
 --
 ALTER TABLE `post_tag`
-  ADD PRIMARY KEY (`post_ID`,`tag_ID`);
+  ADD PRIMARY KEY (`post_ID`,`tag_ID`),
+  ADD KEY `tag_ID` (`tag_ID`);
 
 --
 -- Indexes for table `tags`
@@ -275,34 +256,65 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `comment_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `post_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `tag_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_ID`) REFERENCES `posts` (`post_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `comment_likes`
+--
+ALTER TABLE `comment_likes`
+  ADD CONSTRAINT `comment_likes_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_likes_ibfk_2` FOREIGN KEY (`comment_ID`) REFERENCES `comments` (`comment_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `post_likes`
+--
+ALTER TABLE `post_likes`
+  ADD CONSTRAINT `post_likes_ibfk_1` FOREIGN KEY (`post_ID`) REFERENCES `posts` (`post_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `post_tag`
+--
+ALTER TABLE `post_tag`
+  ADD CONSTRAINT `post_tag_ibfk_1` FOREIGN KEY (`post_ID`) REFERENCES `posts` (`post_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_tag_ibfk_2` FOREIGN KEY (`tag_ID`) REFERENCES `tags` (`tag_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

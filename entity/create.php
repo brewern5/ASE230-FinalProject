@@ -51,7 +51,7 @@
 
                 foreach($tagArray as $tag){
                     $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');
-                    $query->execute([$post_id, checkTagDB($db, $tag)]);
+                    $query->execute([$post_id, createNewTag($db, $tag)]);
                 }
 
             header("location: myPosts.php?x=new");
@@ -110,7 +110,7 @@
                 <label>Write your post</label><br>
                 <textarea style="width:800px;height:200px" class="textBox border border-dark" name='content' type="text" required></textarea>
                 <br><br>
-                <label>Add tag(s)</label><br>
+                <label>Add tag(s) - Need to Start With a '#'</label><br>
                 <input class="textBox border border-dark" name='tags' type="text" required/>
                 <br><br>
                 <button class="btn button2" type="submit">Post</button>

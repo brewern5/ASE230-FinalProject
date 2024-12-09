@@ -19,14 +19,15 @@ function displayElement($db, $posts) {
         '
         <div class="cotainer">
             <div class="row">
-                
                 <h1 class="col-sm-5 width-20%">
                         <a href="detail.php?x='.$posts[$x]['post_ID'].'" class="text-decoration-none">'.$posts[$x]["title"].'</a>
                 </h1>
                 <p class = col-sm-2>'; foreach($tags as $tag) {echo $tag." ";} echo '</p>
                 <h5 class="col-sm-3 width-20%">
                     <a href="" class="text-decoration-none">By: '.$user_id.'</a>
-                </h5>';
+                </h5>
+            </div>
+            <hr>';
                  //admin can edit or delete any post
                 if(isLogged() && $_SESSION['role'] > 0) {
                     echo '<div class="col-sm-1">
