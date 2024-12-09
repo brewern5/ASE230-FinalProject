@@ -174,17 +174,17 @@ function displayPostLikebutton($db, $post_ID, $likes) {
     if(isLogged()) {
         if(!$liked){
             return'
-            <button type="button" class="btn notLike" name="likebutton" onclick="'.likePost($db, $post_ID, $likes).'">Like</button>
+                <button type="button" class="btn notLike" name="likebutton" onclick="'.likePost($db, $user_ID, $post_ID, $likes).'">Like</button>
             ';
         }
         else if($liked){
             return'
-            <button type="button" class="btn button1" name="likebutton" onclick="'.dislikePost($db, $post_ID, $likes).'">Like</button>
+                <button type="button" class="btn button1" name="likebutton" onclick="'.dislikePost($db, $user_ID, $post_ID, $likes).'">Like</button>
             ';
         }
     }
     else {
-        return '<button type="button" class="btn button1" name="likebutton">Like</button>';
+        return '<button type="button" class="btn button1">Like</button>';
     }
     return '
         <div class="col-4 text-left">
@@ -195,22 +195,23 @@ function displayPostLikebutton($db, $post_ID, $likes) {
 function displayCommentLikebutton($db, $comment_ID, $post_ID, $likes){
     $liked = checkCommentLikeStatus($db, $comment_ID);
     if(isLogged()) {
-      if(!$liked){
-          $like = '
-          <form method="POST">
-              <button type="button" class="btn notLike" id="commentLike" name="commentLike" onclick="changeLikeStatusComment(true, '.$comment_ID.')">Like</button>
-          </form>';
-      }
-      else if($liked){
-          $like = '
-          <form method="POST">
-              <button type="button" class="btn button1" id="commentDislike" name="commentDislike" onclick="changeLikeStatusComment(false, '.$comment_ID.')">Unlike</button>
-          </form>';
-      }
-      return 
-          $like.' 
-          <p>'.$likes.'</p>';
+        if(!$liked){
+            $like = '
+            <form method="POST">
+                <button type="button" class="btn notLike" id="commentLike" name="commentLike" onclick="changeLikeStatusComment(true, '.$comment_ID.')">Like</button>
+            </form>';
+        }
+        else if($liked){
+            $like = '
+            <form method="POST">
+                <button type="button" class="btn button1" id="commentDislike" name="commentDislike" onclick="changeLikeStatusComment(false, '.$comment_ID.')">Unlike</button>
+            </form>';
+        }
+        return 
+            $like.' 
+            <p>'.$likes.'</p>';
     }
-  else {
-    <button type="button" class="btn button1">Like</button>
+    else {
+        $like = '<button type="button" class="btn button1">Like</button>';
+    }
 }

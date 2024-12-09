@@ -5,7 +5,9 @@ require_once('post_functions.php');
 
 $post_id=$_GET['x'];
 
-$user_ID = $_SESSION["id"];
+if(isLogged()) {
+    $user_ID = $_SESSION["id"];
+}
 
 function displayElement($db, $post_id) {
      
