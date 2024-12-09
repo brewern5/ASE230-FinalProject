@@ -19,7 +19,6 @@ function displayElement($db, $posts) {
         '
         <div class="cotainer">
             <div class="row">
-                
                 <h1 class="col-sm-5 width-20%">
                         <a href="detail.php?x='.$post['post_ID'].'" class="text-decoration-none">'.$post["title"].'</a>
                 </h1>
@@ -28,6 +27,7 @@ function displayElement($db, $posts) {
                     <a href="" class="text-decoration-none">By: '.$user_id.'</a>
                 </h5>
             </div>
+            <hr>
         </div>';  
     }
 }

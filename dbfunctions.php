@@ -52,7 +52,7 @@ function getTagsByPostID($db, $post_id){
  *  Will check if a tag is already in the data base and return the tag_ID, 
  *  if there is no tag in the DB then a new one will be made with a new id.
 */
-function checkTagDB($db, $tag) {
+function createNewTag($db, $tag) {
 
     $query = $db->prepare('SELECT * FROM tags WHERE tag_title=?');
     $query->execute([$tag]);
@@ -65,6 +65,39 @@ function checkTagDB($db, $tag) {
     $tagID = $query->fetch();
     return $tagID['tag_ID'];
 }
+
+// checks the tag DB for an existing tag, if not found it will return false
+function checkTagDB($db, $tag){
+    $query = $db->prepare('SELECT * FROM tags WHERE tag_title=?');
+    $query->execute([$tag]);
+    print_r($tag);
+    if(count($query->fetchAll()) > 0){
+        print_r('true');
+        return true;
+    }
+    return false;
+}
+
+
+function checkPostTags($db, $tag, $post_ID){
+    $query = $db->prepare('SELECT tag_ID FROM tags WHERE tag_title=?');
+    $query->execute([$tag]);
+
+    if($query->fetch() == null){
+        return false;
+    }
+    $tag_ID = $query->fetch();
+
+    $query = $db->prepare('SELECT * FROM post_tag WHERE tag_id=?');
+    $query->execute([$tag_ID]);
+    if(count($query->fetchAll()) < 0){
+        return false;
+    }
+
+    return true;
+
+}
+
 
 function checkPostLikeStatus($db, $post_ID){
     if(strlen(isLogged())>0){
@@ -99,5 +132,17 @@ function createComment($db, $post_ID, $comment){
     $query=$db->prepare('INSERT INTO comments(post_ID, username, user_ID, content) VALUES(?, ?, ?, ?)');
     $query->execute([$post_ID, $_SESSION['name'], $_SESSION['id'], $comment]);
 }
+
+function getCommentCount($db, $post_ID){
+    $query=$db->prepare('SELECT post_ID FROM comments WHERE post_ID=?');
+    $query->execute([$post_ID]);
+    $commentNum = $query->fetchAll();
+    $num = 0;
+    for($i = 0; $i < count($commentNum); $i++){
+        $num=$i;
+    }
+    return $i;
+}
+
 
 ?>

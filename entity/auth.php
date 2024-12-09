@@ -10,7 +10,7 @@
     }
 
     //make it so this checks the user_id with the name in the DB
-    function checkOwner($post_id, $x){
+    function checkOwner($post_id, $x, $isPost=true){
         if($post_id==$_SESSION['id']){
             return'   <div class="container">
                         <div class="row">

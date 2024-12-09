@@ -1,8 +1,10 @@
 <?php
 
-    require_once("auth.php");
-    require_once("../db.php");
-    require_once("post_functions.php");
+require_once("auth.php");
+require_once("../db.php");
+require_once("post_functions.php");
+
+if(strlen(islogged())>0){
 
     function likePost($db, $post_ID, $user_ID, $likes){
 
@@ -60,8 +62,6 @@
             $likes = $likes['likes']-1;
         }
         $likeButtonHTML = displayPostLikeButton($db, $post_ID, $likes);
-        unset($_POST);
-        unset($likes);
         echo $likeButtonHTML;
 
     }
@@ -80,9 +80,9 @@
             $likes = $likes['likes']-1;
         }
         $likeButtonHTML = displayCommentLikeButton($db, $comment_ID, $post_ID, $likes);
-        unset($_POST);
-        unset($likes);
+
         echo $likeButtonHTML;
     }
+}
 
 ?>
