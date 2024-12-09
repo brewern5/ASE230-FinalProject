@@ -112,54 +112,7 @@ function displayLoggedPost($entity=false){
             <li><a href="create.php" class="nav-link px-2">Create New Post</a></li>';
     }
 }
-//if user is not logged in - some options will not display
-/*
-function displayNav($entity=false){
-    if(isLogged() && !$entity) { 
-        echo
-        '<div class="dropdown text-end">
-            <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-            </a>
-            <ul class="dropdown-menu text-small" style="">
-               <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href=" sign-out.php">Sign out</a></li>
-            </ul>
-        </div>';
-        } 
-    elseif(!isLogged() && !$entity) {
-        echo  
-            '<div class="text-end">
-                <a class="btn btn-info me-2" href="sign-in.php" role="button">Login</a>
-                <a class="btn btn-warning" href="sign-up.php" role="button">Sign Up</a>
-            </div>';
-    }
-    elseif(isLogged() && $entity) { 
-        echo
-        '<div class="dropdown text-end">
-            <a href="#" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-            </a>
-            <ul class="dropdown-menu text-small" style="">
-               <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href=" ../sign-out.php">Sign out</a></li>
-            </ul>
-        </div>';
-        } 
-    elseif(!isLogged() && $entity) {
-        echo  
-            '<div class="text-end">
-                <a class="btn btn-info me-2" href="../sign-in.php" role="button">Login</a>
-                <a class="btn btn-warning" href="../sign-up.php" role="button">Sign Up</a>
-            </div>';
-    }
-    
-}
-*/
+
 //will check login fields and authenticate user
 function checkFields($x) {
     $error='';

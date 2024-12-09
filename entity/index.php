@@ -16,8 +16,10 @@ function displayElement($db, $posts) {
         $user_id = getUserID($db, $posts[$x]['post_ID']);
 
         echo 
-        '<div class="cotainer">
+        '
+        <div class="cotainer">
             <div class="row">
+                
                 <h1 class="col-sm-5 width-20%">
                         <a href="detail.php?x='.$posts[$x]['post_ID'].'" class="text-decoration-none">'.$posts[$x]["title"].'</a>
                 </h1>
@@ -25,6 +27,7 @@ function displayElement($db, $posts) {
                 <h5 class="col-sm-3 width-20%">
                     <a href="" class="text-decoration-none">By: '.$user_id.'</a>
                 </h5>';
+                 //admin can edit or delete any post
                 if(isLogged() && $_SESSION['role'] > 0) {
                     echo '<div class="col-sm-1">
                             <a class="btn btn-info me-2" href="edit.php?x='.$posts[$x]['post_ID'].'" role="button">Edit</a>

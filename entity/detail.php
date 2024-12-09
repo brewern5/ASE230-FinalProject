@@ -5,9 +5,7 @@ require_once('post_functions.php');
 
 $post_id=$_GET['x'];
 
-//echo $post['picture'];
-
-//echo '<img style="width:100%;height:100%;" src="'.$post['picture'].'" class="rounded float-left" alt="...">';
+$user_ID = $_SESSION["id"];
 
 function displayElement($db, $post_id) {
      
@@ -17,8 +15,10 @@ function displayElement($db, $post_id) {
 
     $tags = displayTags($db, $post_id);
 
+    $liked = checkPostLikeStatus($db, $post_id);
+
     echo '
-        <div class="tab mx-5 p-2">
+        <div id="'.$post_id.'"class="tab mx-5 p-2">
             <div class="row">
                 <div class="col-5">
                     '.$pic.'
@@ -47,7 +47,7 @@ function displayElement($db, $post_id) {
             </div>
             <hr>
             <div class="container">
-                <div class="row">
+                <div class="row text-center">
                     <h4 class="text-center">
                         '.$post['content'].'
                     </h4>
@@ -59,9 +59,6 @@ function displayElement($db, $post_id) {
                             <div class="col-10">
                                 <p> Comments : 2 </p>
                             </div>
-                            <div class="col-2 text-left">
-                                <p> Likes : '.$post['likes'].' </p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,23 +69,24 @@ function displayElement($db, $post_id) {
                                 <div class="col-3">
                                     <label>Comment on this post:</label><br>
                                 </div>';
-
-                                if(!isLogged() > 0) {
-                                    echo '<div class="col-7"><h3>Sign in to comment on posts</h3></div>';
-                                }
-                                else {
-                                    echo '<div class="col-7">
-                                            <textarea style="width:500px;height:55px" class="border border-dark" name="comment" type="text" required/></textarea>
-                                        </div>
-                                        <div class="col-1">
-                                            <button class="btn button2 text-dark" type="submit">Post</button>
-                                        </div>';
-                                }
+  
+                                  //visitors cannot comment on posts
+                                  if(!isLogged() > 0) {
+                                      echo '<div class="col-7"><h3>Sign in to comment on posts</h3></div>';
+                                  }
+                                  else {
+                                      echo '<div class="col-7">
+                                              <textarea style="width:500px;height:55px" class="border border-dark" name="comment" type="text" required/></textarea>
+                                          </div>
+                                          <div class="col-1">
+                                              <button class="btn button2 text-dark" type="submit">Post</button>
+                                          </div>';
+                                  }
     echo                    '</div>
                         </form>  
                     </div>
-                    <div class="col-2">
-                        '.displayPostLikebutton($db, $post_id, $post['likes']).'
+                    <div id="postLikeDiv" class="col-2">
+                        '.displayPostLikeButton($db, $post_id, $post['likes']).'
                     </div>
                 </div>
             </div>
@@ -116,8 +114,61 @@ if(count($_POST)>0){
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
 
+            //This will get the post id from the query string in the URL to pass it to the AJAX function
+            //useful to know but easier to just do what I did for USER_ID
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const post_ID = urlParams.get('x');
 
+            const user_ID = '<?php echo $user_ID; ?>';
+
+            //will async'll load the page and update the database aswell as redisplaying the buttons in the correct state
+            function changeLikeStatusPost(liked){
+                $.ajax({
+                    type: "POST",
+                    url: "like.php",
+                    data: { 
+                        like: liked,
+                        post: true,
+                        post_ID: post_ID,
+                        comment_ID: null,
+                        user_ID: user_ID
+                    },
+                    cache: false,
+                    success: function(data){
+                        $("#postLikeDiv").html(data);
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr);
+                        console.log(":(");
+                    }
+                });
+            }
+            function changeLikeStatusComment(liked, comment_ID){
+                $.ajax({
+                    type: "POST",
+                    url: "like.php",
+                    data: { 
+                        like: liked,
+                        post_ID: post_ID,
+                        comment_ID: comment_ID,
+                        user_ID: user_ID
+                    },
+                    cache: false,
+                    success: function(data){
+                        $("#commentLikeDiv_Comment"+comment_ID).html(data);
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr);
+                        console.log(":(");
+                    }
+                });
+            }
+            
+        </script>
     </head>
     <body>        
        
