@@ -157,10 +157,10 @@ function displayComments($db, $post_ID, $viewAll=false){
     }
     else{
         echo'
-        <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
+        <div class="tab mx-5 p-2">
             <div class="container">
                 <div class="row">
-                    <h3 class="text-center">There is no comments on this post</h3>
+                    <h3 class="text-center">There are no comments on this post</h3>
                 </div>
             </div>
         </div>';   
