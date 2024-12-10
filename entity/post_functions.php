@@ -22,7 +22,6 @@ function displayTags($db, $post_id){
         $query=$db->prepare('SELECT tag_title FROM tags WHERE tag_id=?');
         $query->execute([$tag['tag_ID']]);
         $tagName = $query->fetch();
-      
         $tags .= $tagName['tag_title'].' ';
     }
     return $tags;
@@ -158,10 +157,10 @@ function displayComments($db, $post_ID, $viewAll=false){
     }
     else{
         echo'
-        <div class="tab mx-5 p-2">
+        <div class="border rounded bg-dark mx-5 p-2 jumbotron text-white">
             <div class="container">
                 <div class="row">
-                    <h3 class="text-center">There are no comments on this post</h3>
+                    <h3 class="text-center">There is no comments on this post</h3>
                 </div>
             </div>
         </div>';   
@@ -169,23 +168,21 @@ function displayComments($db, $post_ID, $viewAll=false){
 
 }
 
+function displayPostLikeButton($db, $post_ID, $likes){
 
-function displayPostLikebutton($db, $post_ID, $likes) {
     $liked = checkPostLikeStatus($db, $post_ID);
-    if(isLogged()) {
-        if(!$liked){
-            return'
-                <button type="button" class="btn notLike" name="likebutton" onclick="'.likePost($db, $user_ID, $post_ID, $likes).'">Like</button>
-            ';
-        }
-        else if($liked){
-            return'
-                <button type="button" class="btn button1" name="likebutton" onclick="'.dislikePost($db, $user_ID, $post_ID, $likes).'">Like</button>
-            ';
-        }
+
+    if(!$liked){
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn notLike" id="postLike" name="postLike" onclick="changeLikeStatusPost(true);">Like</button>
+        </form>';
     }
-    else {
-        return '<button type="button" class="btn button1">Like</button>';
+    else if($liked){
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn button1" id="postDislike" name="postDislike" onclick="changeLikeStatusPost(false);">Unlike</button>
+        </form>';
     }
     return '
         <div class="col-4 text-left">
@@ -195,24 +192,19 @@ function displayPostLikebutton($db, $post_ID, $likes) {
 }
 function displayCommentLikebutton($db, $comment_ID, $post_ID, $likes){
     $liked = checkCommentLikeStatus($db, $comment_ID);
-    if(isLogged()) {
-        if(!$liked){
-            $like = '
-            <form method="POST">
-                <button type="button" class="btn notLike" id="commentLike" name="commentLike" onclick="changeLikeStatusComment(true, '.$comment_ID.')">Like</button>
-            </form>';
-        }
-        else if($liked){
-            $like = '
-            <form method="POST">
-                <button type="button" class="btn button1" id="commentDislike" name="commentDislike" onclick="changeLikeStatusComment(false, '.$comment_ID.')">Unlike</button>
-            </form>';
-        }
-        return 
-            $like.' 
-            <p>'.$likes.'</p>';
+    if(!$liked){
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn notLike" id="commentLike" name="commentLike" onclick="changeLikeStatusComment(true, '.$comment_ID.')">Like</button>
+        </form>';
     }
-    else {
-        $like = '<button type="button" class="btn button1">Like</button>';
+    else if($liked){
+        $like = '
+        <form method="POST">
+            <button type="button" class="btn button1" id="commentDislike" name="commentDislike" onclick="changeLikeStatusComment(false, '.$comment_ID.')">Unlike</button>
+        </form>';
     }
+    return 
+        $like.' 
+        <p>'.$likes.'</p>';
 }

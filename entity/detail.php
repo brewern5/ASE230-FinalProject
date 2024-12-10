@@ -6,7 +6,6 @@ require_once('post_functions.php');
 
 $post_id=$_GET['x'];
 
-
 if(strlen(isLogged())>0){
     $user_ID = $_SESSION["id"];
 }
@@ -23,6 +22,7 @@ function displayElement($db, $post_id) {
 
     echo '
         <div id="'.$post_id.'"class="tab mx-5 p-2">
+
             <div class="row">
                 <div class="col-5">
                     '.$pic.'
@@ -32,22 +32,9 @@ function displayElement($db, $post_id) {
                     <h1 class="">'.$post['title'].'</h1>
                     <h3 class="">Band: '.$post['band'].' || Album: '.$post['album'].'</h3>
                     <p>Song: '.$post['song'].'</p>
-                    <p>Tag(s): '.$tags.' <p>';
-
-                    if(isLogged() && ($_SESSION['role'] + checkOwner($post['user_ID'], $post_id)) > 0) {
-                        echo '<div class="container">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <a class="btn button1 me-2" href="edit.php?x='.$post_id.'" role="button">Edit</a>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <a class="btn button2" href="delete.php?x='.$post_id.'" role="button">Delete</a>
-                                    </div>
-                                </div>
-                            </div>';
-                    }
-                    
-    echo       '</div>
+                    <p>Tag(s): '.$tags.' <p>
+                    '.(strlen(isLogged()) > 0 ? checkOwner($post['user_ID'], $post_id) : null).'
+                </div>
             </div>
             <hr>
             <div class="container">
@@ -72,21 +59,14 @@ function displayElement($db, $post_id) {
                             <div class="row">
                                 <div class="col-3">
                                     <label>Comment on this post:</label><br>
-                                </div>';
-  
-                                  //visitors cannot comment on posts
-                                  if(!isLogged() > 0) {
-                                      echo '<div class="col-7"><h3>Sign in to comment on posts</h3></div>';
-                                  }
-                                  else {
-                                      echo '<div class="col-7">
-                                              <textarea style="width:500px;height:55px" class="border border-dark" name="comment" type="text" required/></textarea>
-                                          </div>
-                                          <div class="col-1">
-                                              <button class="btn button2 text-dark" type="submit">Post</button>
-                                          </div>';
-                                  }
-    echo                    '</div>
+                                </div>
+                                <div class="col-7">
+                                    <textarea style="width:500px;height:55px" class="border border-dark" name="comment" type="text" required/></textarea>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn button2 text-dark" type="submit">Post</button>
+                                </div>
+                            </div>
                         </form>  
                     </div>
                     <div id="postLikeDiv" class="col-2">
