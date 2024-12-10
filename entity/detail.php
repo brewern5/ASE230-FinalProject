@@ -32,9 +32,22 @@ function displayElement($db, $post_id) {
                     <h1 class="">'.$post['title'].'</h1>
                     <h3 class="">Band: '.$post['band'].' || Album: '.$post['album'].'</h3>
                     <p>Song: '.$post['song'].'</p>
-                    <p>Tag(s): '.$tags.' <p>
-                    '.(strlen(isLogged()) > 0 ? checkOwner($post['user_ID'], $post_id) : null).'
-                </div>
+                    <p>Tag(s): '.$tags.' <p>';
+                    
+                    if(isLogged() && ($_SESSION['role'] + checkOwner($post['user_ID'], $post_id)) > 0) {
+                        echo '<div class="container">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <a class="btn button1 me-2" href="edit.php?x='.$post_id.'" role="button">Edit</a>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a class="btn button2" href="delete.php?x='.$post_id.'" role="button">Delete</a>
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                    
+    echo      '</div>
             </div>
             <hr>
             <div class="container">
