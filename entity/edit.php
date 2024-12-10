@@ -62,8 +62,8 @@
                     }
                 }
 
-                //header('location: detail.php?x='.$_GET['x']);
-                //die();
+                header('location: detail.php?x='.$_GET['x']);
+                die();
             }
         }
 ?>
