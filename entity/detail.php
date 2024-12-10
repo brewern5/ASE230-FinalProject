@@ -1,11 +1,13 @@
 <?php
+
 require_once('auth.php');
 require_once('../db.php');
 require_once('post_functions.php');
 
 $post_id=$_GET['x'];
 
-if(isLogged()) {
+
+if(strlen(isLogged())>0){
     $user_ID = $_SESSION["id"];
 }
 
@@ -59,7 +61,7 @@ function displayElement($db, $post_id) {
                     <div class="container">
                         <div class="row">
                             <div class="col-10">
-                                <p> Comments : 2 </p>
+                                <p> Comments : '.getCommentCount($db, $post_id).' </p>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,8 @@
         $error='';
 
         require_once('../db.php');
+        require_once('post_functions.php');
+        require_once('../dbfunctions.php');
 
         $post_id=$_GET['x'];
 
@@ -51,8 +53,13 @@
                 $tagArray = postTags($_POST['tags']);
 
                 foreach($tagArray as $tag){
-                    $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');
-                    $query->execute([$post_id, checkTagDB($db, $tag)]);
+                    $var = checkPostTags($db, $tag, $post_id);
+                    
+                    if(checkPostTags($db, $tag, $post_id) != 1){
+                        $newTagID = createNewTag($db, $tag);
+                        $query = $db->prepare('INSERT INTO post_tag(post_ID, tag_ID) VALUES(?, ?)');
+                        $query->execute([$post_id, $newTagID]);
+                    }
                 }
 
                 header('location: detail.php?x='.$_GET['x']);
@@ -77,7 +84,7 @@
         <?php echo displayNav(); ?>
         
         <div class="tab mx-5 text-center">
-            <h1 class="pt-2">Create Post</h1>
+            <h1 class="pt-2">Edit Post</h1>
             <div class="error"> 
                 <?php
                     if(strlen($error) > 0) {echo $error;}
@@ -114,7 +121,7 @@
                     <?php echo $post['content']; ?>
                 </textarea>
                 <br><br>
-                <label>Add tag(s) Need to Start With a '#'</label><br>
+                <label>Add tag(s) - Need to Start With a '#'</label><br>
                 <input value="<?php foreach ($tags as $tag){echo $tag;} ?>" class="border border-dark" name='tags' type="text" required/>
                 <br><br>
                 <button class="btn button2" type="submit">Post</button>
