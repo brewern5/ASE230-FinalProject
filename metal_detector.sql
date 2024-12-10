@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2024 at 08:04 PM
+-- Generation Time: Dec 10, 2024 at 05:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,9 +42,10 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_ID`, `post_ID`, `user_ID`, `username`, `content`, `timestamp`, `likes`) VALUES
-(4, 100, 3, 'Joeseph', 'I agree whole heartedly!!!', '2024-12-09 18:43:19', 1),
-(5, 100, 3, 'Joeseph', 'comment 2', '2024-12-09 18:51:09', 1),
-(6, 100, 3, 'Joeseph', 'asdasd', '2024-12-09 18:59:27', 1);
+(7, 101, 5, 'you', 'yygib', '2024-12-10 03:31:44', 2),
+(8, 101, 5, 'you', 'k kj bhyjvyuvuvo', '2024-12-10 03:31:51', 2),
+(9, 101, 4, 'me', 'Hello', '2024-12-10 03:51:48', 1),
+(10, 105, 4, 'me', 'This is a really good review', '2024-12-10 03:57:26', 1);
 
 -- --------------------------------------------------------
 
@@ -62,9 +63,12 @@ CREATE TABLE `comment_likes` (
 --
 
 INSERT INTO `comment_likes` (`comment_ID`, `user_ID`) VALUES
-(4, 3),
-(5, 3),
-(6, 3);
+(7, 4),
+(7, 5),
+(8, 4),
+(8, 5),
+(9, 4),
+(10, 4);
 
 -- --------------------------------------------------------
 
@@ -91,7 +95,11 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_ID`, `user_ID`, `title`, `content`, `picture`, `band`, `album`, `song`, `likes`, `date`, `timestamp`) VALUES
-(100, 1, 'ERRA Self Titled Goes Insane!!', 'This album is pure gold omg', 'https://upload.wikimedia.org/wikipedia/en/0/01/Erra_Self-Titled_cover.jpg', 'ERRA', 'ERRA', 'ERRA - Self Titled', 2, '0000-00-00', '2024-12-09 19:04:05');
+(101, 4, 'me', '                    moo', '', 'ma', 'mi', 'mu', 1, '0000-00-00', '2024-12-10 03:52:27'),
+(103, 5, 'u', 'uibi', '', 'o', 'a', 'o', 0, '0000-00-00', '2024-12-10 03:28:14'),
+(104, 5, 'vf wkj', 'ihjknbkbuj', '', 'buyv', 'bj', 'hvbi', 0, '0000-00-00', '2024-12-10 03:28:30'),
+(105, 4, 'Machinist review', 'My favorite song by this band.', 'https://f4.bcbits.com/img/a1786535961_5.jpg', 'The Machinist', 'All is Not Well', 'Lysergic Lullaby', 1, '0000-00-00', '2024-12-10 03:57:31'),
+(106, 5, 'Erra\'s Self titled is amazing!!', 'This album is spectacular, I literally have never listened to such a good album before in my life!', 'https://upload.wikimedia.org/wikipedia/en/0/01/Erra_Self-Titled_cover.jpg', 'Erra', 'Erra', 'Gungrave', 0, '0000-00-00', '2024-12-10 04:10:13');
 
 -- --------------------------------------------------------
 
@@ -109,8 +117,8 @@ CREATE TABLE `post_likes` (
 --
 
 INSERT INTO `post_likes` (`post_ID`, `user_ID`) VALUES
-(100, 1),
-(100, 3);
+(101, 4),
+(105, 4);
 
 -- --------------------------------------------------------
 
@@ -128,9 +136,12 @@ CREATE TABLE `post_tag` (
 --
 
 INSERT INTO `post_tag` (`post_ID`, `tag_ID`) VALUES
-(100, 4),
-(100, 16),
-(100, 21);
+(101, 40),
+(103, 42),
+(104, 43),
+(105, 44),
+(105, 45),
+(106, 4);
 
 -- --------------------------------------------------------
 
@@ -153,13 +164,17 @@ INSERT INTO `tags` (`tag_ID`, `tag_title`) VALUES
 (22, '#123'),
 (24, '#1234'),
 (6, '#bonJovi'),
+(44, '#deathMetal'),
 (5, '#Drift'),
 (14, '#dumb'),
 (4, '#ERRA'),
 (18, '#IA '),
 (19, '#IAFore'),
 (20, '#IAForever'),
+(43, '#ihbuib'),
 (17, '#InventAnimate '),
+(45, '#metalcore'),
+(40, '#my'),
 (2, '#post'),
 (39, '#se'),
 (36, '#sel'),
@@ -169,6 +184,8 @@ INSERT INTO `tags` (`tag_ID`, `tag_title`) VALUES
 (35, '#selftitle'),
 (16, '#selftitled'),
 (1, '#tag'),
+(42, '#ybdhjvb'),
+(41, '#yi'),
 (29, '#yo'),
 (30, '#yoy'),
 (32, '#yoyo'),
@@ -186,17 +203,20 @@ CREATE TABLE `users` (
   `email` varchar(32) NOT NULL,
   `password` varchar(128) NOT NULL,
   `firstname` varchar(32) NOT NULL,
-  `lastname` varchar(32) NOT NULL
+  `lastname` varchar(32) NOT NULL,
+  `role` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`) VALUES
-(1, 'bobjones123445@gmail.com', '$2y$10$qpFs7UDK8tslTcZNusv2j.c2od9Rcrapsd.1g3KsA9WE0iR7JyLXy', 'Nate', 'Brewer'),
-(2, 'joe@mama.com', '$2y$10$t.mZqHzvMxYvWZGZu8Oz/u2PiQx56UanHFoT1qwOo8GwD4qgln13m', 'joe', 'mama'),
-(3, 'joe@schmoe.com', '$2y$10$soqNuNu3pH87FYUYNwB0K.BgBC37aY50oDoauhTDffeiN2eRNBnsu', 'Joeseph', 'Schmoseph');
+INSERT INTO `users` (`user_ID`, `email`, `password`, `firstname`, `lastname`, `role`) VALUES
+(1, 'bobjones123445@gmail.com', '$2y$10$qpFs7UDK8tslTcZNusv2j.c2od9Rcrapsd.1g3KsA9WE0iR7JyLXy', 'Nate', 'Brewer', 0),
+(2, 'joe@mama.com', '$2y$10$t.mZqHzvMxYvWZGZu8Oz/u2PiQx56UanHFoT1qwOo8GwD4qgln13m', 'joe', 'mama', 0),
+(3, 'joe@schmoe.com', '$2y$10$soqNuNu3pH87FYUYNwB0K.BgBC37aY50oDoauhTDffeiN2eRNBnsu', 'Joeseph', 'Schmoseph', 0),
+(4, 'me@me.com', '$2y$10$v9WSxzpWsUoJmoWRiPBrEeLFGFvma4GLrzVKSeBSQvi5cF5QUX9fW', 'me', 'me', 1),
+(5, 'you@you.com', '$2y$10$nFrlib2Qht4GP/e2G.80Ce/BzAxJQVabFCJaxPkwT0ryjilIaqq.K', 'you', 'ou', 0);
 
 --
 -- Indexes for dumped tables
@@ -259,25 +279,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `comment_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `post_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `tag_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
