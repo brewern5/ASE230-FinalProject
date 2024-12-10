@@ -19,7 +19,6 @@ if(count($_POST)>0){
         if (checkIfInDB($user, $_POST['email'],$_POST['password'])){
             $_SESSION['id'] = $user['user_ID'];
             $_SESSION['name'] = $user['firstname'];
-            $_SESSION['role'] = $user['role'];
             header('location: index.php?x=new');
             die();
         }

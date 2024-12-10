@@ -5,27 +5,23 @@
 require_once('../auth.php');
 require_once('auth.php');
 
-$currentRole = $_SESSION['role'];
-
-
-
-function displayElement($element, $post_id) {
-    echo   '<div class="container">
-                <div class="row">
-                    <div class="col-10">
-                        <h1><a href="detail.php?x='.$element[$post_id]['post_ID'].'" class="text-decoration-none">'.$element[$post_id]['title'].'</a></h1>
+ function displayElement($element, $post_id) {
+          echo    '<div class="container">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1><a href="detail.php?x='.$element[$post_id]['post_ID'].'" class="text-decoration-none">'.$element[$post_id]['title'].'</a></h1>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-info me-2" href="edit.php?x='.$element[$post_id]['post_ID'].'" role="button">Edit</a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="delete.php?x='.$element[$post_id]['post_ID'].'" role="button">Delete</a>
+                        </div>
                     </div>
-                    <div class="col-1">
-                        <a class="btn btn-info me-2" href="edit.php?x='.$element[$post_id]['post_ID'].'" role="button">Edit</a>
-                    </div>
-                    <div class="col-1">
-                        <a class="btn btn-danger" href="delete.php?x='.$element[$post_id]['post_ID'].'" role="button">Delete</a>
-                    </div>
-                </div>
-            </div>';
+                </div>';
 
-}
-?>
+    }
+    ?>
 
 <html>
     <head>
